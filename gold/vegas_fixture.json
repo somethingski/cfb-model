@@ -1,0 +1,116 @@
+{
+  "human_verified": true,
+  "verified_by": "Sean Gawronski",
+  "verified_on": "2026-07-25",
+  "sigma": 15.985046900074781,
+  "sigma_fitted_on": "2014-2021",
+  "method": "p_home_devig = Phi(-spread / sigma). p_home_moneyline = devig(american_to_implied(home), american_to_implied(away)), multiplicative. Spreads are home-relative: negative favours the home team.",
+  "instructions": "Compute each hand_computed value yourself from the inputs on the row - with a calculator and a Z-table, not by running this project's code. Then fill them in and set human_verified/verified_by/verified_on. The test compares hand_computed against pipeline to 4 decimal places.",
+  "games": [
+    {
+      "case": "home favourite, spread and moneyline",
+      "game_id": 401520148,
+      "season": 2023,
+      "home_team": "Minnesota",
+      "away_team": "Nebraska",
+      "provider": "consensus",
+      "spread": -7.0,
+      "ml_provider": "Bovada",
+      "home_moneyline": -300,
+      "away_moneyline": 250,
+      "source_type": "spread",
+      "pipeline": {
+        "p_home_devig": 0.6692739673093336,
+        "p_home_moneyline": 0.7241379310344829
+      },
+      "hand_computed": {
+        "p_home_devig": 0.66927397,
+        "p_home_moneyline": 0.724138
+      }
+    },
+    {
+      "case": "away favourite, spread and moneyline",
+      "game_id": 401634300,
+      "season": 2024,
+      "home_team": "Stanford",
+      "away_team": "TCU",
+      "provider": "Bovada",
+      "spread": 8.0,
+      "ml_provider": "Bovada",
+      "home_moneyline": 250,
+      "away_moneyline": -300,
+      "source_type": "spread",
+      "pipeline": {
+        "p_home_devig": 0.3083728894658352,
+        "p_home_moneyline": 0.27586206896551724
+      },
+      "hand_computed": {
+        "p_home_devig": 0.30837289,
+        "p_home_moneyline": 0.275862
+      }
+    },
+    {
+      "case": "pick em",
+      "game_id": 401525819,
+      "season": 2023,
+      "home_team": "Houston",
+      "away_team": "UTSA",
+      "provider": "consensus",
+      "spread": 0.0,
+      "ml_provider": "Bovada",
+      "home_moneyline": 100,
+      "away_moneyline": -120,
+      "source_type": "spread",
+      "pipeline": {
+        "p_home_devig": 0.5,
+        "p_home_moneyline": 0.4782608695652174
+      },
+      "hand_computed": {
+        "p_home_devig": 0.5,
+        "p_home_moneyline": 0.478261
+      }
+    },
+    {
+      "case": "pre-moneyline era, spread only",
+      "game_id": 400869421,
+      "season": 2016,
+      "home_team": "Wake Forest",
+      "away_team": "Tulane",
+      "provider": "consensus",
+      "spread": -16.0,
+      "ml_provider": null,
+      "home_moneyline": null,
+      "away_moneyline": null,
+      "source_type": "spread",
+      "pipeline": {
+        "p_home_devig": 0.8415709900157681,
+        "p_home_moneyline": null
+      },
+      "hand_computed": {
+        "p_home_devig": 0.84157099,
+        "p_home_moneyline": null
+      }
+    },
+    {
+      "case": "extreme favourite, widest spread in the database",
+      "game_id": 400934513,
+      "season": 2017,
+      "home_team": "West Virginia",
+      "away_team": "Delaware State",
+      "provider": "consensus",
+      "spread": -62.0,
+      "ml_provider": null,
+      "home_moneyline": null,
+      "away_moneyline": null,
+      "source_type": "spread",
+      "pipeline": {
+        "p_home_devig": 0.9999474756935274,
+        "p_home_moneyline": null
+      },
+      "hand_computed": {
+        "p_home_devig": 0.99994748,
+        "p_home_moneyline": null
+      }
+    }
+  ]
+}

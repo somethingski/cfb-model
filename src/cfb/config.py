@@ -23,6 +23,14 @@ LAST_SEASON: int = 2025
 
 SEASONS: range = range(FIRST_SEASON, LAST_SEASON + 1)
 
+TRAIN_LAST_SEASON: int = 2021
+"""Last season any parameter may be fitted on.
+
+The leakage boundary for anything estimated from outcomes, including the Phase 2 spread
+model's sigma. Phase 5 builds its full train/validation/test split on top of this; it
+lives here so the boundary has one definition rather than one per module.
+"""
+
 # --- Paths -------------------------------------------------------------------
 
 DATA_DIR: Path = PROJECT_ROOT / "data"

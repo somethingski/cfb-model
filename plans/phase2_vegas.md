@@ -9,7 +9,16 @@ This phase produces the benchmark every result is measured against. It gets its 
 ## Exit criteria (human-verified)
 1. Table `vegas_benchmark(game_id, provider, p_home_devig, source_type)` populated for every game with usable line data.
 2. Hand-computed de-vig for 3 gold-fixture games matches the pipeline to 4 decimal places (human does the arithmetic independently — Sean-style exact check).
-3. Sanity distribution printed: mean `p_home_devig` ≈ 0.55–0.60 (home teams win more often); no probabilities outside (0.01, 0.99); vig removed (paired probs sum to 1.0 exactly).
+3. Sanity distribution printed: mean `p_home_devig` ≈ 0.55–0.60 (home teams win more often); vig removed (paired probs sum to 1.0 exactly).
+   - **Amended 2026-07-25**, with evidence, from "no probabilities outside (0.01, 0.99)".
+     That bound assumed a moneyline-derived benchmark; a spread-derived one puts 504 games
+     (4.9%) outside it, reaching 0.99995 at spread −62. Clipping was rejected because it is
+     the over-claim direction: among the 319 training games with `|spread| ≥ 37` the
+     favourite won 318 (99.7%) against the normal model's ~99%, so clipping to 0.99 would
+     understate a real effect and weaken the benchmark. Reported per build instead; RISKS #17.
+   - The ≈0.55–0.60 band is met on the both-FBS population (0.5745, against an actual home
+     win rate of 0.5784). Over all games the mean is 0.6146 against an actual 0.6200 — the
+     gap is the 1,192 FBS-vs-FCS games averaging 0.92, which is the schedule, not miscalibration.
 4. Coverage report: % of games per season in the benchmark set; games excluded are listed with reasons, never imputed.
 5. Commit: `phase 2: vegas benchmark`.
 

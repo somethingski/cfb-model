@@ -1,4 +1,4 @@
-.PHONY: ingest ingest-check features train evaluate reproduce test lint
+.PHONY: ingest ingest-check benchmark features train evaluate reproduce test lint
 
 # Stubs fail loudly so a green `make reproduce` can never be mistaken for a real run.
 
@@ -8,6 +8,10 @@ ingest:
 # One live request to confirm CFBD_API_KEY works before committing to a full backfill.
 ingest-check:
 	python -m cfb.ingest.backfill --check
+
+# The yardstick. Derived from `lines`; safe to rebuild at any time.
+benchmark:
+	python -m cfb.vegas.benchmark
 
 features:
 	@echo "features: not implemented until phase 4" && exit 1

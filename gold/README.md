@@ -29,3 +29,34 @@ point: a skipped gate is a forgotten gate.
 
 Once verified, the fixture is a regression test — if a later change to the client, the
 transforms, or the schema alters any of these values, that test is what notices.
+
+## `vegas_fixture.json`
+
+Five games pinning the de-vig arithmetic: a home favourite and an away favourite with
+near-mirrored numbers (−7.0 with −300/+250 against +8.0 with +250/−300, so an inverted
+sign convention cannot satisfy both), a pick 'em, a pre-moneyline-era spread-only game,
+and the widest spread in the database.
+
+```bash
+python scripts/make_gold_vegas_fixture.py
+```
+
+This one works differently from `games_fixture.json`, and the difference matters. A game's
+score can be checked against an external source; a de-vigged probability cannot — there is
+nowhere to look it up. So the generator emits `hand_computed` as **null** and you fill it
+in yourself:
+
+1. For each game, compute `p_home_devig = Φ(-spread / sigma)` with a calculator and a
+   Z-table. `sigma` is at the top of the fixture.
+2. Where moneylines are present, compute `p_home_moneyline`: convert each side with
+   `-m → m/(m+100)` and `+p → 100/(p+100)`, then divide the home implied probability by
+   the sum of the two.
+3. Fill in every `hand_computed` value, then set `human_verified`, `verified_by`,
+   `verified_on`.
+
+Do **not** compute these by running this project's code. The pipeline's numbers are in the
+`pipeline` block already; the whole point is that yours arrive independently. The test
+compares the two to 4 decimal places.
+
+Re-running the generator preserves any `hand_computed` values already filled in — that
+arithmetic is the one thing here that cannot be regenerated.

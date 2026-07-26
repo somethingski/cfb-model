@@ -197,6 +197,34 @@ def assert_validation_only(frame: pd.DataFrame, where: str = "this frame") -> No
         raise LeakageError(f"{where} received no rows at all; nothing to calibrate on")
 
 
+def assert_test_only(frame: pd.DataFrame, where: str = "this frame") -> None:
+    """Raise if the frame holds anything other than test-season rows.
+
+    The mirror image of :func:`assert_no_test_rows`, and it exists for Phase 6. Evaluation
+    is the one place in the project that reads test labels, and the failure it has to guard
+    against is the opposite one: a training or validation season slipping into the
+    evaluation frame would mix games the model was fitted on into the headline number, which
+    moves that number in the flattering direction and shows up as nothing at all.
+
+    Args:
+        frame: Frame to check.
+        where: What is being checked, for the error message.
+
+    Raises:
+        LeakageError: If any row is outside :data:`TEST_SEASONS`, or if there are no rows.
+    """
+    present = seasons_in(frame)
+    intruders = sorted(set(present) - set(TEST_SEASONS))
+    if intruders:
+        raise LeakageError(
+            f"non-test rows reached {where}: {intruders}. Evaluation is scored on seasons "
+            f"{TEST_SEASONS[0]}-{TEST_SEASONS[-1]} only; a train or validation season here "
+            "would score the model on games it was fitted on."
+        )
+    if not present:
+        raise LeakageError(f"{where} received no rows at all; nothing to evaluate")
+
+
 def rows_for(frame: pd.DataFrame, seasons: Iterable[int]) -> pd.DataFrame:
     """Select the rows belonging to the given seasons.
 

@@ -60,3 +60,33 @@ compares the two to 4 decimal places.
 
 Re-running the generator preserves any `hand_computed` values already filled in — that
 arithmetic is the one thing here that cannot be regenerated.
+
+## `eval_fixture.json`
+
+One week of the held-out period — 2023 week 1, 52 games — with the model's probability, the
+de-vigged line's probability, and the outcome for each. Phase 6's exit criterion 4.
+
+```bash
+python scripts/make_eval_fixture.py
+```
+
+Same shape as `vegas_fixture.json`: `hand_computed` is emitted null and you fill it in.
+
+1. Paste the `p_model`, `p_vegas` and `home_win` columns into a spreadsheet.
+2. Compute the mean of `(p_model - home_win)^2`, and the same for `p_vegas`.
+3. Count the home wins — one cell, and it isolates the label from the probabilities.
+4. Fill in `hand_computed`, then set `human_verified`, `verified_by`, `verified_on`.
+
+What this catches that the unit tests cannot: `tests/test_metrics.py` proves the Brier
+formula is right on four games written into the test file, but it cannot prove the pipeline
+applied that formula to the right games, with the right labels, in the right order. That is
+the aggregation rather than the arithmetic, and it is exactly what survives a green suite.
+A spreadsheet catches it because a spreadsheet is not built out of the same parts.
+
+The probabilities handed over are the pipeline's own, so this is not a check on the model —
+it is a check that the headline in `results/results_table.md` is the mean squared error of
+the numbers the model actually produced on the games it actually scored.
+
+`tests/test_gold_eval.py` fails while `hand_computed` is blank. The test compares to 6
+decimal places, tighter than the Phase 2 fixture's 4, because averaging a spreadsheet column
+needs no Z-table and the two should agree exactly.

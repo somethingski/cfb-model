@@ -51,6 +51,18 @@ TRAIN_REPORT_PATH: Path = MODELS_DIR / "train_report.json"
 committed, because it is the record of what was searched, what was chosen, and what it
 scored — the thing a human reviews rather than a thing a run regenerates."""
 
+RESULTS_DIR: Path = PROJECT_ROOT / "results"
+RESULTS_TABLE_PATH: Path = RESULTS_DIR / "results_table.md"
+RELIABILITY_PLOT_PATH: Path = RESULTS_DIR / "reliability.png"
+MODEL_CARD_PATH: Path = RESULTS_DIR / "model_card.md"
+EVAL_METRICS_PATH: Path = RESULTS_DIR / "metrics.json"
+"""Phase 6 artefacts, all committed.
+
+Unlike ``models/``, none of these is a build output that can be regenerated from something
+else in the repository: they are the numbers the README and the write-up cite, so they have
+to be in-repo and reproducible rather than living in a terminal that scrolled.
+"""
+
 ELO_PARAMS_PATH: Path = PROJECT_ROOT / "elo_params.json"
 """Elo parameters frozen by the Phase 3 grid search.
 

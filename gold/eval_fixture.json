@@ -1,0 +1,493 @@
+{
+  "human_verified": false,
+  "verified_by": null,
+  "verified_on": null,
+  "slice": {
+    "season": 2023,
+    "week": 1,
+    "season_type": "regular",
+    "n": 52
+  },
+  "method": "Brier = mean over the games below of (p - home_win)^2, where p is that system's probability and home_win is 1 if the home team won and 0 otherwise. No weighting, no clipping, every listed game counted once.",
+  "instructions": "Paste the p_model and home_win columns into a spreadsheet and compute the mean of (p_model - home_win)^2; do the same for p_vegas. Fill both into hand_computed, then set human_verified, verified_by and verified_on. Do not compute these by running this project's code \u2014 the pipeline's answers are already in the pipeline block, and the point is that yours arrive by a different route. The test compares the two to 6 decimal places.",
+  "pipeline": {
+    "model_brier": 0.15351255292772711,
+    "vegas_brier": 0.1489053536614457,
+    "home_wins": 40
+  },
+  "hand_computed": {
+    "model_brier": null,
+    "vegas_brier": null,
+    "home_wins": null
+  },
+  "games": [
+    {
+      "game_id": 401525434,
+      "date": "2023-08-26",
+      "home_team": "Notre Dame",
+      "away_team": "Navy",
+      "p_model": 0.7954545454545454,
+      "p_vegas": 0.8945636425349387,
+      "home_win": 1
+    },
+    {
+      "game_id": 401520145,
+      "date": "2023-08-26",
+      "home_team": "Jacksonville State",
+      "away_team": "UTEP",
+      "p_model": 0.4329896907216495,
+      "p_vegas": 0.4750590522892305,
+      "home_win": 1
+    },
+    {
+      "game_id": 401525450,
+      "date": "2023-08-26",
+      "home_team": "New Mexico State",
+      "away_team": "Massachusetts",
+      "p_model": 0.7954545454545454,
+      "p_vegas": 0.6916271105341648,
+      "home_win": 0
+    },
+    {
+      "game_id": 401532392,
+      "date": "2023-08-26",
+      "home_team": "San Diego State",
+      "away_team": "Ohio",
+      "p_model": 0.4482758620689655,
+      "p_vegas": 0.5866573041822893,
+      "home_win": 1
+    },
+    {
+      "game_id": 401520147,
+      "date": "2023-08-26",
+      "home_team": "Vanderbilt",
+      "away_team": "Hawai'i",
+      "p_model": 0.7872340425531915,
+      "p_vegas": 0.8699283242191392,
+      "home_win": 1
+    },
+    {
+      "game_id": 401523986,
+      "date": "2023-08-27",
+      "home_team": "USC",
+      "away_team": "San Jos\u00e9 State",
+      "p_model": 0.7954545454545454,
+      "p_vegas": 0.97180653654436,
+      "home_win": 1
+    },
+    {
+      "game_id": 401520146,
+      "date": "2023-08-27",
+      "home_team": "Louisiana Tech",
+      "away_team": "Florida International",
+      "p_model": 0.6451612903225806,
+      "p_vegas": 0.7342062958128108,
+      "home_win": 1
+    },
+    {
+      "game_id": 401525816,
+      "date": "2023-08-31",
+      "home_team": "UCF",
+      "away_team": "Kent State",
+      "p_model": 0.7012987012987013,
+      "p_vegas": 0.9819459750271637,
+      "home_win": 1
+    },
+    {
+      "game_id": 401520174,
+      "date": "2023-08-31",
+      "home_team": "UConn",
+      "away_team": "NC State",
+      "p_model": 0.4,
+      "p_vegas": 0.15098578080108366,
+      "home_win": 0
+    },
+    {
+      "game_id": 401520148,
+      "date": "2023-09-01",
+      "home_team": "Minnesota",
+      "away_team": "Nebraska",
+      "p_model": 0.7872340425531915,
+      "p_vegas": 0.6692739673093336,
+      "home_win": 1
+    },
+    {
+      "game_id": 401520176,
+      "date": "2023-09-01",
+      "home_team": "Utah",
+      "away_team": "Florida",
+      "p_model": 0.7954545454545454,
+      "p_vegas": 0.6916271105341648,
+      "home_win": 1
+    },
+    {
+      "game_id": 401520163,
+      "date": "2023-09-01",
+      "home_team": "Michigan State",
+      "away_team": "Central Michigan",
+      "p_model": 0.7012987012987013,
+      "p_vegas": 0.8259746435463697,
+      "home_win": 1
+    },
+    {
+      "game_id": 401525463,
+      "date": "2023-09-01",
+      "home_team": "Miami",
+      "away_team": "Miami (OH)",
+      "p_model": 0.7012987012987013,
+      "p_vegas": 0.8490142191989163,
+      "home_win": 1
+    },
+    {
+      "game_id": 401525462,
+      "date": "2023-09-01",
+      "home_team": "Georgia Tech",
+      "away_team": "Louisville",
+      "p_model": 0.2127659574468085,
+      "p_vegas": 0.3083728894658352,
+      "home_win": 0
+    },
+    {
+      "game_id": 401523988,
+      "date": "2023-09-02",
+      "home_team": "Hawai'i",
+      "away_team": "Stanford",
+      "p_model": 0.4329896907216495,
+      "p_vegas": 0.4378603807350919,
+      "home_win": 0
+    },
+    {
+      "game_id": 401520157,
+      "date": "2023-09-02",
+      "home_team": "Iowa",
+      "away_team": "Utah State",
+      "p_model": 0.7954545454545454,
+      "p_vegas": 0.933374342041868,
+      "home_win": 1
+    },
+    {
+      "game_id": 401520159,
+      "date": "2023-09-02",
+      "home_team": "Kentucky",
+      "away_team": "Ball State",
+      "p_model": 0.7954545454545454,
+      "p_vegas": 0.944670807830436,
+      "home_win": 1
+    },
+    {
+      "game_id": 401520160,
+      "date": "2023-09-02",
+      "home_team": "Liberty",
+      "away_team": "Bowling Green",
+      "p_model": 0.7012987012987013,
+      "p_vegas": 0.6692739673093336,
+      "home_win": 1
+    },
+    {
+      "game_id": 401520162,
+      "date": "2023-09-02",
+      "home_team": "Michigan",
+      "away_team": "East Carolina",
+      "p_model": 0.7954545454545454,
+      "p_vegas": 0.9845464624644846,
+      "home_win": 1
+    },
+    {
+      "game_id": 401520170,
+      "date": "2023-09-02",
+      "home_team": "Purdue",
+      "away_team": "Fresno State",
+      "p_model": 0.4482758620689655,
+      "p_vegas": 0.6346037642319423,
+      "home_win": 0
+    },
+    {
+      "game_id": 401520172,
+      "date": "2023-09-02",
+      "home_team": "SMU",
+      "away_team": "Louisiana Tech",
+      "p_model": 0.7012987012987013,
+      "p_vegas": 0.905531083707336,
+      "home_win": 1
+    },
+    {
+      "game_id": 401520179,
+      "date": "2023-09-02",
+      "home_team": "Tennessee",
+      "away_team": "Virginia",
+      "p_model": 0.92,
+      "p_vegas": 0.9600818791037494,
+      "home_win": 1
+    },
+    {
+      "game_id": 401523994,
+      "date": "2023-09-02",
+      "home_team": "TCU",
+      "away_team": "Colorado",
+      "p_model": 0.92,
+      "p_vegas": 0.8945636425349387,
+      "home_win": 0
+    },
+    {
+      "game_id": 401525464,
+      "date": "2023-09-02",
+      "home_team": "Boston College",
+      "away_team": "Northern Illinois",
+      "p_model": 0.7012987012987013,
+      "p_vegas": 0.7342062958128108,
+      "home_win": 0
+    },
+    {
+      "game_id": 401525822,
+      "date": "2023-09-02",
+      "home_team": "Oklahoma",
+      "away_team": "Arkansas State",
+      "p_model": 0.7954545454545454,
+      "p_vegas": 0.9887961199402406,
+      "home_win": 1
+    },
+    {
+      "game_id": 401531387,
+      "date": "2023-09-02",
+      "home_team": "Temple",
+      "away_team": "Akron",
+      "p_model": 0.6451612903225806,
+      "p_vegas": 0.7238460726672048,
+      "home_win": 1
+    },
+    {
+      "game_id": 401520151,
+      "date": "2023-09-02",
+      "home_team": "Auburn",
+      "away_team": "Massachusetts",
+      "p_model": 0.7954545454545454,
+      "p_vegas": 0.9926518984994567,
+      "home_win": 1
+    },
+    {
+      "game_id": 401520156,
+      "date": "2023-09-02",
+      "home_team": "Indiana",
+      "away_team": "Ohio State",
+      "p_model": 0.08695652173913043,
+      "p_vegas": 0.04268371210533689,
+      "home_win": 0
+    },
+    {
+      "game_id": 401520180,
+      "date": "2023-09-02",
+      "home_team": "Wisconsin",
+      "away_team": "Buffalo",
+      "p_model": 0.7954545454545454,
+      "p_vegas": 0.933374342041868,
+      "home_win": 1
+    },
+    {
+      "game_id": 401520181,
+      "date": "2023-09-02",
+      "home_team": "Western Kentucky",
+      "away_team": "South Florida",
+      "p_model": 0.7954545454545454,
+      "p_vegas": 0.7919655108692657,
+      "home_win": 1
+    },
+    {
+      "game_id": 401523997,
+      "date": "2023-09-02",
+      "home_team": "Washington",
+      "away_team": "Boise State",
+      "p_model": 0.7872340425531915,
+      "p_vegas": 0.8178224448237845,
+      "home_win": 1
+    },
+    {
+      "game_id": 401525824,
+      "date": "2023-09-02",
+      "home_team": "Texas",
+      "away_team": "Rice",
+      "p_model": 0.92,
+      "p_vegas": 0.9868186091102971,
+      "home_win": 1
+    },
+    {
+      "game_id": 401523991,
+      "date": "2023-09-02",
+      "home_team": "North Texas",
+      "away_team": "California",
+      "p_model": 0.7012987012987013,
+      "p_vegas": 0.2867085262114361,
+      "home_win": 0
+    },
+    {
+      "game_id": 401523996,
+      "date": "2023-09-02",
+      "home_team": "USC",
+      "away_team": "Nevada",
+      "p_model": 0.7954545454545454,
+      "p_vegas": 0.9912781992582186,
+      "home_win": 1
+    },
+    {
+      "game_id": 401520173,
+      "date": "2023-09-02",
+      "home_team": "Texas A&M",
+      "away_team": "New Mexico",
+      "p_model": 0.7954545454545454,
+      "p_vegas": 0.9912781992582186,
+      "home_win": 1
+    },
+    {
+      "game_id": 401520175,
+      "date": "2023-09-02",
+      "home_team": "UL Monroe",
+      "away_team": "Army",
+      "p_model": 0.4,
+      "p_vegas": 0.2974506333887245,
+      "home_win": 1
+    },
+    {
+      "game_id": 401523990,
+      "date": "2023-09-02",
+      "home_team": "Colorado State",
+      "away_team": "Washington State",
+      "p_model": 0.2127659574468085,
+      "p_vegas": 0.2974506333887245,
+      "home_win": 0
+    },
+    {
+      "game_id": 401525817,
+      "date": "2023-09-02",
+      "home_team": "Baylor",
+      "away_team": "Texas State",
+      "p_model": 0.7954545454545454,
+      "p_vegas": 0.9543978120311346,
+      "home_win": 0
+    },
+    {
+      "game_id": 401525819,
+      "date": "2023-09-02",
+      "home_team": "Houston",
+      "away_team": "UTSA",
+      "p_model": 0.5652173913043478,
+      "p_vegas": 0.5,
+      "home_win": 1
+    },
+    {
+      "game_id": 401520149,
+      "date": "2023-09-02",
+      "home_team": "Alabama",
+      "away_team": "Middle Tennessee",
+      "p_model": 0.98,
+      "p_vegas": 0.9932643275071855,
+      "home_win": 1
+    },
+    {
+      "game_id": 401520155,
+      "date": "2023-09-02",
+      "home_team": "Illinois",
+      "away_team": "Toledo",
+      "p_model": 0.7012987012987013,
+      "p_vegas": 0.7342062958128108,
+      "home_win": 1
+    },
+    {
+      "game_id": 401520167,
+      "date": "2023-09-02",
+      "home_team": "North Carolina",
+      "away_team": "South Carolina",
+      "p_model": 0.4329896907216495,
+      "p_vegas": 0.4378603807350919,
+      "home_win": 1
+    },
+    {
+      "game_id": 401520169,
+      "date": "2023-09-02",
+      "home_team": "Penn State",
+      "away_team": "West Virginia",
+      "p_model": 0.7954545454545454,
+      "p_vegas": 0.9001573264118863,
+      "home_win": 1
+    },
+    {
+      "game_id": 401525825,
+      "date": "2023-09-02",
+      "home_team": "Wyoming",
+      "away_team": "Texas Tech",
+      "p_model": 0.4,
+      "p_vegas": 0.1991840616103197,
+      "home_win": 1
+    },
+    {
+      "game_id": 401525467,
+      "date": "2023-09-03",
+      "home_team": "Virginia Tech",
+      "away_team": "Old Dominion",
+      "p_model": 0.7012987012987013,
+      "p_vegas": 0.8562209868353492,
+      "home_win": 1
+    },
+    {
+      "game_id": 401531347,
+      "date": "2023-09-03",
+      "home_team": "Tulane",
+      "away_team": "South Alabama",
+      "p_model": 0.7954545454545454,
+      "p_vegas": 0.6463002015548033,
+      "home_win": 1
+    },
+    {
+      "game_id": 401520152,
+      "date": "2023-09-03",
+      "home_team": "BYU",
+      "away_team": "Sam Houston",
+      "p_model": 0.7954545454545454,
+      "p_vegas": 0.8945636425349387,
+      "home_win": 1
+    },
+    {
+      "game_id": 401523995,
+      "date": "2023-09-03",
+      "home_team": "UCLA",
+      "away_team": "Coastal Carolina",
+      "p_model": 0.7012987012987013,
+      "p_vegas": 0.833891057772187,
+      "home_win": 1
+    },
+    {
+      "game_id": 401520171,
+      "date": "2023-09-03",
+      "home_team": "Rutgers",
+      "away_team": "Northwestern",
+      "p_model": 0.6451612903225806,
+      "p_vegas": 0.6692739673093336,
+      "home_win": 1
+    },
+    {
+      "game_id": 401532573,
+      "date": "2023-09-03",
+      "home_team": "San Jos\u00e9 State",
+      "away_team": "Oregon State",
+      "p_model": 0.2127659574468085,
+      "p_vegas": 0.19056435215366485,
+      "home_win": 0
+    },
+    {
+      "game_id": 401520182,
+      "date": "2023-09-03",
+      "home_team": "Florida State",
+      "away_team": "LSU",
+      "p_model": 0.6136363636363636,
+      "p_vegas": 0.4378603807350919,
+      "home_win": 1
+    },
+    {
+      "game_id": 401525468,
+      "date": "2023-09-05",
+      "home_team": "Duke",
+      "away_team": "Clemson",
+      "p_model": 0.4329896907216495,
+      "p_vegas": 0.21711292431729556,
+      "home_win": 1
+    }
+  ]
+}

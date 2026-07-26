@@ -1,0 +1,528 @@
+{
+  "claim": "Calibration approaching the de-vigged Vegas closing line. The model does not beat the line and is not a betting tool. A test score better than the benchmark is treated as a leakage alarm, not as a result.",
+  "headline": {
+    "statement": "On 2398 held-out games the model's Brier is 0.1913 against the de-vigged closing line's 0.1763 \u2014 short of the line by 0.0149.",
+    "gap_brier": 0.01493405677030571,
+    "gap_log_loss": 0.040734997813720364,
+    "skill_fraction": 0.7748265424107421,
+    "skill_fraction_definition": "(brier_naive - brier_model) / (brier_naive - brier_vegas)"
+  },
+  "game_set": {
+    "seasons": [
+      2023,
+      2024,
+      2025
+    ],
+    "n": 2398,
+    "n_per_season": {
+      "2023": 792,
+      "2024": 798,
+      "2025": 808
+    },
+    "rule": "test seasons, FBS vs FBS, and a Vegas benchmark present \u2014 the intersection. Every system is scored on this one frame, in one order.",
+    "dropped_for_missing_line": 0,
+    "fcs_games_excluded_upstream": "FBS-vs-FCS games are excluded by the Phase 5 model frame (RISKS #3), before this phase sees the data.",
+    "benchmark_providers": {
+      "Bovada": 2369,
+      "consensus": 29
+    },
+    "season_coverage": {
+      "2023": {
+        "n": 792,
+        "by_season_type": {
+          "regular": 750,
+          "postseason": 42,
+          "spring_regular": 0
+        },
+        "regular_weeks": [
+          1,
+          15
+        ],
+        "last_kickoff": "2024-01-09"
+      },
+      "2024": {
+        "n": 798,
+        "by_season_type": {
+          "regular": 752,
+          "postseason": 46,
+          "spring_regular": 0
+        },
+        "regular_weeks": [
+          1,
+          16
+        ],
+        "last_kickoff": "2025-01-21"
+      },
+      "2025": {
+        "n": 808,
+        "by_season_type": {
+          "regular": 762,
+          "postseason": 46,
+          "spring_regular": 0
+        },
+        "regular_weeks": [
+          1,
+          16
+        ],
+        "last_kickoff": "2026-01-20"
+      }
+    }
+  },
+  "systems": {
+    "model": "Phase 5 LightGBM, isotonic-calibrated on 2022, output clipped to [0.02, 0.98]",
+    "model_raw": "the same booster without the calibrator",
+    "model_platt": "the same booster with a Platt calibrator fitted on 2022 (RISKS #25)",
+    "vegas": "vegas_benchmark.p_home_devig \u2014 spread-derived, multiplicative de-vig",
+    "naive": "constant 0.5753679580443242, the home-win rate on training seasons 2014-2021 \u2014 not on the test seasons, which would be a season-level aggregate applied inside its own season",
+    "elo_only": "1 / (1 + 10 ** (-(elo_diff + hfa) / scale)), hfa 50 from the frozen elo_params.json, scale 401.54 fitted on 2014-2021 only"
+  },
+  "elo_only_fit": {
+    "scale": 401.5445032767722,
+    "definitional_scale": 400.0,
+    "hfa": 50.0,
+    "fitted_on": [
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021
+    ],
+    "train_log_loss": 0.551992886808842
+  },
+  "overall": {
+    "model": {
+      "n": 2398,
+      "brier": 0.19128011376327508,
+      "log_loss": 0.5630529159873098
+    },
+    "model_raw": {
+      "n": 2398,
+      "brier": 0.18834093076881564,
+      "log_loss": 0.5542082182044734
+    },
+    "model_platt": {
+      "n": 2398,
+      "brier": 0.1893743177170332,
+      "log_loss": 0.5584030997111832
+    },
+    "vegas": {
+      "n": 2398,
+      "brier": 0.17634605699296937,
+      "log_loss": 0.5223179181735894
+    },
+    "naive": {
+      "n": 2398,
+      "brier": 0.24266851315717294,
+      "log_loss": 0.6784154319382395
+    },
+    "elo_only": {
+      "n": 2398,
+      "brier": 0.1901704551249402,
+      "log_loss": 0.5589286321324949
+    }
+  },
+  "per_season": {
+    "2023": {
+      "n": 792,
+      "gap_brier": 0.01390198621360117,
+      "gap_log_loss": 0.038811476334975614,
+      "skill_fraction": 0.8073713913026591,
+      "systems": {
+        "model": {
+          "brier": 0.1854220646500351,
+          "log_loss": 0.5504877355951435
+        },
+        "model_raw": {
+          "brier": 0.18288327943046645,
+          "log_loss": 0.5443621585520511
+        },
+        "model_platt": {
+          "brier": 0.18470765568936148,
+          "log_loss": 0.5496827446840314
+        },
+        "vegas": {
+          "brier": 0.17152007843643394,
+          "log_loss": 0.5116762592601679
+        },
+        "naive": {
+          "brier": 0.24368997213817398,
+          "log_loss": 0.6804740369150211
+        },
+        "elo_only": {
+          "brier": 0.18621992496912732,
+          "log_loss": 0.5512786446661776
+        }
+      }
+    },
+    "2024": {
+      "n": 798,
+      "gap_brier": 0.01804953949125046,
+      "gap_log_loss": 0.04658784291426221,
+      "skill_fraction": 0.7048325343266338,
+      "systems": {
+        "model": {
+          "brier": 0.19992393029761146,
+          "log_loss": 0.5820575828244108
+        },
+        "model_raw": {
+          "brier": 0.1977972328637892,
+          "log_loss": 0.5747112913139554
+        },
+        "model_platt": {
+          "brier": 0.19717354133953463,
+          "log_loss": 0.5746925849733794
+        },
+        "vegas": {
+          "brier": 0.181874390806361,
+          "log_loss": 0.5354697399101486
+        },
+        "naive": {
+          "brier": 0.2430245566963381,
+          "log_loss": 0.6791329869407499
+        },
+        "elo_only": {
+          "brier": 0.1985135500274956,
+          "log_loss": 0.5786213054136992
+        }
+      }
+    },
+    "2025": {
+      "n": 808,
+      "gap_brier": 0.012868765519805814,
+      "gap_log_loss": 0.03684002085943028,
+      "skill_fraction": 0.8041256544894628,
+      "systems": {
+        "model": {
+          "brier": 0.1884853232970444,
+          "log_loss": 0.5565998203618012
+        },
+        "model_raw": {
+          "brier": 0.18435124115023097,
+          "log_loss": 0.5436099841739683
+        },
+        "model_platt": {
+          "brier": 0.18624587201797357,
+          "log_loss": 0.5508628917189453
+        },
+        "vegas": {
+          "brier": 0.17561655777723859,
+          "log_loss": 0.519759799502371
+        },
+        "naive": {
+          "brier": 0.24131564402696662,
+          "log_loss": 0.6756889170451525
+        },
+        "elo_only": {
+          "brier": 0.18580291818331227,
+          "log_loss": 0.54697818262126
+        }
+      }
+    }
+  },
+  "reliability": {
+    "n_bins": 10,
+    "binning": "equal-count bins over the sorted predicted probability",
+    "overall": {
+      "model": [
+        {
+          "lo": 0.02,
+          "hi": 0.2127659574468085,
+          "n": 240,
+          "mean_predicted": 0.15585970542846966,
+          "empirical": 0.20416666666666666
+        },
+        {
+          "lo": 0.2127659574468085,
+          "hi": 0.4,
+          "n": 240,
+          "mean_predicted": 0.3809191688929321,
+          "empirical": 0.32083333333333336
+        },
+        {
+          "lo": 0.4,
+          "hi": 0.4329896907216495,
+          "n": 240,
+          "mean_predicted": 0.43183955805018404,
+          "empirical": 0.3958333333333333
+        },
+        {
+          "lo": 0.4329896907216495,
+          "hi": 0.4791666666666667,
+          "n": 240,
+          "mean_predicted": 0.4479877052914503,
+          "empirical": 0.4625
+        },
+        {
+          "lo": 0.4791666666666667,
+          "hi": 0.6136363636363636,
+          "n": 240,
+          "mean_predicted": 0.5538090164935022,
+          "empirical": 0.5916666666666667
+        },
+        {
+          "lo": 0.6136363636363636,
+          "hi": 0.6451612903225806,
+          "n": 240,
+          "mean_predicted": 0.6228311339198436,
+          "empirical": 0.6208333333333333
+        },
+        {
+          "lo": 0.6451612903225806,
+          "hi": 0.7012987012987013,
+          "n": 240,
+          "mean_predicted": 0.6966509049712927,
+          "empirical": 0.675
+        },
+        {
+          "lo": 0.7012987012987013,
+          "hi": 0.7954545454545454,
+          "n": 240,
+          "mean_predicted": 0.7774890992296761,
+          "empirical": 0.775
+        },
+        {
+          "lo": 0.7954545454545454,
+          "hi": 0.7954545454545454,
+          "n": 239,
+          "mean_predicted": 0.7954545454545453,
+          "empirical": 0.8786610878661087
+        },
+        {
+          "lo": 0.7954545454545454,
+          "hi": 0.98,
+          "n": 239,
+          "mean_predicted": 0.869732630510528,
+          "empirical": 0.9414225941422594
+        }
+      ],
+      "vegas": [
+        {
+          "lo": 0.015453537535515371,
+          "hi": 0.23594036514566608,
+          "n": 240,
+          "mean_predicted": 0.14672592136663976,
+          "empirical": 0.13333333333333333
+        },
+        {
+          "lo": 0.23594036514566608,
+          "hi": 0.34213987124540163,
+          "n": 240,
+          "mean_predicted": 0.3008496096262567,
+          "empirical": 0.2833333333333333
+        },
+        {
+          "lo": 0.34213987124540163,
+          "hi": 0.4255655595122743,
+          "n": 240,
+          "mean_predicted": 0.3924930363165371,
+          "empirical": 0.39166666666666666
+        },
+        {
+          "lo": 0.4255655595122743,
+          "hi": 0.5373809573529356,
+          "n": 240,
+          "mean_predicted": 0.46608788907488674,
+          "empirical": 0.4875
+        },
+        {
+          "lo": 0.5373809573529356,
+          "hi": 0.5744344404877256,
+          "n": 240,
+          "mean_predicted": 0.5629366526760291,
+          "empirical": 0.5291666666666667
+        },
+        {
+          "lo": 0.5744344404877256,
+          "hi": 0.6463002015548033,
+          "n": 240,
+          "mean_predicted": 0.6058555970564062,
+          "empirical": 0.6291666666666667
+        },
+        {
+          "lo": 0.6463002015548033,
+          "hi": 0.7238460726672048,
+          "n": 240,
+          "mean_predicted": 0.6754990274260152,
+          "empirical": 0.7333333333333333
+        },
+        {
+          "lo": 0.7238460726672048,
+          "hi": 0.8094356478463351,
+          "n": 240,
+          "mean_predicted": 0.764928998711522,
+          "empirical": 0.7875
+        },
+        {
+          "lo": 0.8094356478463351,
+          "hi": 0.905531083707336,
+          "n": 239,
+          "mean_predicted": 0.8629793317419029,
+          "empirical": 0.9205020920502092
+        },
+        {
+          "lo": 0.905531083707336,
+          "hi": 0.9990213762230473,
+          "n": 239,
+          "mean_predicted": 0.9563367830857946,
+          "empirical": 0.9707112970711297
+        }
+      ],
+      "elo_only": [
+        {
+          "lo": 0.017236641348699733,
+          "hi": 0.22180527127124816,
+          "n": 240,
+          "mean_predicted": 0.1507570337439907,
+          "empirical": 0.17916666666666667
+        },
+        {
+          "lo": 0.22181071408233632,
+          "hi": 0.3310850277951045,
+          "n": 240,
+          "mean_predicted": 0.27837362512097147,
+          "empirical": 0.32916666666666666
+        },
+        {
+          "lo": 0.33108767170098274,
+          "hi": 0.4254648716354446,
+          "n": 240,
+          "mean_predicted": 0.38254072221978463,
+          "empirical": 0.43333333333333335
+        },
+        {
+          "lo": 0.42555697942540655,
+          "hi": 0.5123352954084488,
+          "n": 240,
+          "mean_predicted": 0.469913281897456,
+          "empirical": 0.4625
+        },
+        {
+          "lo": 0.5123496500267821,
+          "hi": 0.5895233277843537,
+          "n": 240,
+          "mean_predicted": 0.5522472810795012,
+          "empirical": 0.5458333333333333
+        },
+        {
+          "lo": 0.5898308529494156,
+          "hi": 0.6665825431646863,
+          "n": 240,
+          "mean_predicted": 0.6254682390755859,
+          "empirical": 0.6625
+        },
+        {
+          "lo": 0.6666766197430659,
+          "hi": 0.7331850728864313,
+          "n": 240,
+          "mean_predicted": 0.6999357859332392,
+          "empirical": 0.6791666666666667
+        },
+        {
+          "lo": 0.7337533141752549,
+          "hi": 0.8047723889395917,
+          "n": 240,
+          "mean_predicted": 0.7687400222518211,
+          "empirical": 0.7625
+        },
+        {
+          "lo": 0.8053042443404853,
+          "hi": 0.8894986035705882,
+          "n": 239,
+          "mean_predicted": 0.8484078894123488,
+          "empirical": 0.8702928870292888
+        },
+        {
+          "lo": 0.8898100272389926,
+          "hi": 0.9933469500914108,
+          "n": 239,
+          "mean_predicted": 0.9303148096711251,
+          "empirical": 0.9414225941422594
+        }
+      ]
+    }
+  },
+  "robustness": {
+    "moneyline_benchmark": {
+      "n": 2337,
+      "games_without_a_moneyline": 56,
+      "games_excluded_as_mismatched": 5,
+      "moneyline_brier": 0.18019707076386768,
+      "moneyline_log_loss": 0.5344032507104585,
+      "spread_benchmark_brier": 0.18018935799511593,
+      "spread_benchmark_log_loss": 0.533692557530906,
+      "model_brier": 0.1951322396658616,
+      "model_log_loss": 0.5730375555944122,
+      "gap_vs_moneyline_brier": 0.014935168901993923,
+      "gap_vs_spread_brier": 0.014942881670745672,
+      "why_not_the_plan_s_split": "The plan asked for moneyline-sourced vs spread-fallback benchmark games. Phase 2 made p_home_devig spread-derived for every season on purpose (RISKS #15), so that split has no members. This asks the same question the other way round."
+    },
+    "calibrator_comparison": {
+      "note": "Isotonic is the shipped calibrator; Platt is the alternative RISKS #4 and #25 name; raw is the booster with neither. All three were fitted on training data and 2022 only, so these are their first out-of-sample scores.",
+      "raw_brier": 0.18834093076881564,
+      "isotonic_brier": 0.19128011376327508,
+      "platt_brier": 0.1893743177170332,
+      "isotonic_cost_vs_raw": 0.002939182994459444,
+      "platt_cost_vs_raw": 0.0010333869482175573,
+      "in_sample_isotonic_gain_2022": "Phase 5 measured 0.20244 -> 0.19510 on the season it was fitted on. That is a fit, not an estimate, and RISKS #25 said so before this was run.",
+      "resolution": {
+        "model_raw": {
+          "n": 2398,
+          "n_distinct": 2386,
+          "largest_plateau": 3,
+          "largest_plateau_value": 0.7047835927514776
+        },
+        "model": {
+          "n": 2398,
+          "n_distinct": 62,
+          "largest_plateau": 405,
+          "largest_plateau_value": 0.7954545454545454
+        },
+        "model_platt": {
+          "n": 2398,
+          "n_distinct": 2386,
+          "largest_plateau": 3,
+          "largest_plateau_value": 0.6634155629481241
+        }
+      },
+      "confident_predictions": {
+        "threshold": 0.85,
+        "n": 367,
+        "observed_frequency": 0.9291553133514986,
+        "raw_mean_prediction": 0.914120252711432,
+        "isotonic_mean_prediction": 0.8438263774119835
+      },
+      "must_not_be_used_to_reselect": "Switching the shipped model on the strength of these numbers would be selecting a model on the test set. The shipped model stays shipped; the cost is reported."
+    }
+  },
+  "tripwire": {
+    "rule": "model Brier must be >= the line's Brier minus the tolerance",
+    "tolerance": 0.002,
+    "model_brier": 0.19128011376327508,
+    "vegas_brier": 0.17634605699296937,
+    "gap_brier": 0.01493405677030571,
+    "n": 2398,
+    "tripped": false,
+    "scope": "The pooled test period only. A single season beating the line is reported and not failed: ~800 games cannot separate a leak from noise, and a gate that fires on noise gets loosened, which is how gates die.",
+    "seasons_beating_vegas": []
+  },
+  "artifact_witness": {
+    "validation_season": 2022,
+    "recomputed_calibrated_brier": 0.1951022999676465,
+    "note": "Recomputed from the reloaded booster and calibrator and checked against train_report.json before any test label was read. The model scored here is the model Phase 5 fitted."
+  },
+  "limitations": [
+    "Not a betting tool. The model scores worse than the de-vigged closing line, and the line already has vig on top of it. Nothing here has been evaluated against closing-line value, bet sizing, or transaction costs, and no such claim is made.",
+    "The benchmark is spread-derived, not a traded price. `p_home_devig` converts a closing spread through a normal margin model with a fixed sigma fitted on 2014-2021 (RISKS #15, #17). It is a good yardstick, not the market's own probability.",
+    "One model, one split, one run. There is no repeated-seed study and no confidence interval on any gap reported here. Differences of a thousandth of a Brier point between systems are not resolvable at this sample size.",
+    "Hyperparameters are barely tuned in any meaningful sense. The 24-point grid spans 0.0053 in mean forward-CV log loss best to worst (RISKS #23); the chosen point is defensible, not discovered.",
+    "The isotonic calibrator did not generalise. Fitted on a single season of 776 games (RISKS #4, #25), it improved 2022 in-sample and made every held-out season worse than leaving the model raw; the measured cost and the mechanism are in `results_table.md`. The headline is still the calibrated model, because re-picking the raw one on the strength of its test-season score would be selecting a model on the test set.",
+    "A one-parameter logistic of the Elo difference scores better than the shipped calibrated model on these seasons. The 26-feature booster earns its keep only before calibration, and only narrowly, which says the rolling box-score features carry little signal that Elo does not already carry.",
+    "Elo is cold-started in 2014 and every FCS opponent shares one fixed 1200 rating (RISKS #18, #19, #22), so the rating features are noisiest exactly where the training data begins and are inflated for teams fresh off an FCS game.",
+    "Plays are reconstructed as rushing attempts plus pass attempts, not observed (RISKS #21), so every yards-per-play and pace feature rests on a derived denominator that will not match every published play count.",
+    "Team strength is represented by Elo, rest, and rolling box-score rates only. There are no injuries, no weather, no personnel, no travel distance, and no market information of any kind \u2014 that last one by rule, since the line is the benchmark."
+  ],
+  "lightgbm_version": "4.7.0"
+}

@@ -3,16 +3,16 @@
 A college football game-outcome model, built in phases with an explicit anti-leakage
 framework.
 
-**Status: Phase 5 (training + calibration).** CFBD data lands in SQLite, the de-vigged
-closing line is built as the benchmark, a custom Elo rating runs the schedule in kickoff
-order, a parquet feature store is built behind a leakage audit that recomputes a sample of
-its rows from a database truncated at each game's kickoff, and a LightGBM classifier is
-fitted on 2014-2021 and calibrated on 2022. The 2023-2025 test seasons have not been
-scored: that is Phase 6.
+**Status: Phase 6 (evaluation).** CFBD data lands in SQLite, the de-vigged closing line is
+built as the benchmark, a custom Elo rating runs the schedule in kickoff order, a parquet
+feature store is built behind a leakage audit that recomputes a sample of its rows from a
+database truncated at each game's kickoff, a LightGBM classifier is fitted on 2014-2021 and
+calibrated on 2022, and the 2023-2025 seasons have now been scored once.
 
-The project's claim is **calibration approaching the de-vigged Vegas closing line** —
-not beating it. Results, baselines, and limitations are written up in Phase 7; this
-file is a stub until then.
+The project's claim is **calibration approaching the de-vigged Vegas closing line** — not
+beating it. On 2,398 held-out games the model is short of the line by **0.0149 Brier**.
+Full numbers: [`results/results_table.md`](results/results_table.md) and
+[`results/model_card.md`](results/model_card.md). The prose write-up is Phase 7.
 
 ## Layout
 
@@ -147,6 +147,53 @@ two runs of `make train` produce that file byte-for-byte identically, and the sa
 
 Both calibration figures are in-sample — the calibrator was fitted on the season it is
 scored on. They are not evidence that it generalises, and Phase 6 is where that is tested.
+
+## Evaluation
+
+```bash
+make evaluate       # score the held-out seasons and write results/
+```
+
+The only code in the project that reads a test-season label. It runs against the saved
+model rather than re-fitting one, and refuses to start if the artifacts no longer reproduce
+the validation Brier recorded in `train_report.json` — so evaluation cannot change the
+thing it measures.
+
+Four systems on one identical game set: **2,398 FBS-vs-FBS games across 2023-2025, every
+one of them carrying a closing line**, so nothing was dropped for a missing benchmark. Each
+season's coverage is printed rather than assumed, since a season quietly missing its bowls
+would shrink the test set toward the easier part of a year and still look fine.
+
+| 2023-2025, n=2,398 | Brier | Log loss |
+|---|---|---|
+| naive home baseline (57.5%) | 0.2427 | 0.6784 |
+| Elo only | 0.1902 | 0.5589 |
+| model, calibrated | 0.1913 | 0.5631 |
+| de-vigged closing line | 0.1763 | 0.5223 |
+
+**The model is short of the line by 0.0149 Brier**, closing 77.5% of the distance between
+the naive baseline and the closing line. That is the intended result. Scoring better than
+the line would be evidence of leakage, and `make evaluate` exits non-zero if it ever does.
+
+Two findings worth stating plainly, because they are the first things a careful reader will
+notice:
+
+- **The isotonic calibrator did not generalise.** Fitted on 2022, it improved that season
+  in-sample and made every held-out season *worse* than leaving the model raw (0.1913
+  against 0.1883). `RISKS.md` #25 predicted this before the run. The shipped model was not
+  switched to raw on the strength of that, because picking a variant on test-season scores
+  is selecting a model on the test set.
+- **A one-parameter Elo logistic scores better than the shipped calibrated model.** The
+  26-feature booster earns its keep only before calibration, and only narrowly. The honest
+  reading is that the rolling box-score features carry little signal Elo does not already
+  carry — a finding about the feature set, recorded as `RISKS.md` #26.
+
+`tests/test_no_overclaiming.py` guards the prose itself, so that no published sentence can
+drift into claiming an edge over the market: every flagged term has to sit in a sentence
+that also negates it, and seven poisoned sentences prove the scan fires. It caught a
+sentence in this very section on its first run. `gold/eval_fixture.json` holds one week of
+predictions for a human to score in a spreadsheet, and `tests/test_gold_eval.py` fails
+until that is done.
 
 See `CLAUDE.md` for project conventions, `DECISIONS.md` for the choice log, and
 `RISKS.md` for known gaps.

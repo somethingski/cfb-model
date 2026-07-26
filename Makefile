@@ -37,8 +37,11 @@ audit: features
 train: audit
 	python -m cfb.model.train
 
+# The only target that reads a test-season label. Deliberately does NOT depend on `train`:
+# evaluation must not be able to change the model it is measuring. It fails instead if the
+# artifacts are missing, or if they no longer reproduce train_report.json's validation Brier.
 evaluate:
-	@echo "evaluate: not implemented until phase 6" && exit 1
+	python -m cfb.eval.evaluate
 
 reproduce: ingest benchmark elo audit train evaluate
 	@echo "reproduce: not implemented until phase 7" && exit 1

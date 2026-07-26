@@ -1,7 +1,7 @@
 {
-  "human_verified": false,
-  "verified_by": null,
-  "verified_on": null,
+  "human_verified": true,
+  "verified_by": "Sean Gawronski",
+  "verified_on": "2026-07-26",
   "slice": {
     "season": 2023,
     "week": 1,
@@ -16,9 +16,9 @@
     "home_wins": 40
   },
   "hand_computed": {
-    "model_brier": null,
-    "vegas_brier": null,
-    "home_wins": null
+    "model_brier": 0.15351255292772714,
+    "vegas_brier": 0.14890535366144567,
+    "home_wins": 40
   },
   "games": [
     {

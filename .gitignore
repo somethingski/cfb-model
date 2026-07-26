@@ -5,8 +5,10 @@
 data/
 cache/
 
-# Model artifacts
-models/
+# Model artifacts. The fitted objects are build outputs; train_report.json is the record
+# of what was searched, chosen and scored, and is committed for review.
+models/*
+!models/train_report.json
 *.pkl
 *.joblib
 *.txt.model

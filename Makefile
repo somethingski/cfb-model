@@ -35,7 +35,7 @@ audit: features
 # Depending on audit is what makes the gate mechanical rather than honour-system:
 # there is no path to a trained model that does not run the leakage audit first.
 train: audit
-	@echo "train: not implemented until phase 5" && exit 1
+	python -m cfb.model.train
 
 evaluate:
 	@echo "evaluate: not implemented until phase 6" && exit 1

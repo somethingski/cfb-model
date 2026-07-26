@@ -1,0 +1,496 @@
+{
+  "claim": "Calibration approaching the de-vigged Vegas closing line. The model is not expected to beat the line; a validation score better than the benchmark is treated as a leakage alarm, not as a result.",
+  "splits": {
+    "train": [
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021
+    ],
+    "validation": [
+      2022
+    ],
+    "test": [
+      2023,
+      2024,
+      2025
+    ],
+    "scheme": "season-forward; random splits are a bug (CLAUDE.md)",
+    "forward_cv_folds": [
+      {
+        "fit": [
+          2014,
+          2015,
+          2016,
+          2017,
+          2018
+        ],
+        "score": 2019
+      },
+      {
+        "fit": [
+          2014,
+          2015,
+          2016,
+          2017,
+          2018,
+          2019
+        ],
+        "score": 2020
+      },
+      {
+        "fit": [
+          2014,
+          2015,
+          2016,
+          2017,
+          2018,
+          2019,
+          2020
+        ],
+        "score": 2021
+      }
+    ]
+  },
+  "data": {
+    "source": "data/features/features.parquet",
+    "fcs_rows_excluded": 1288,
+    "final_fit_rows": 5911,
+    "validation_rows": 776,
+    "features": [
+      "home_elo_pre",
+      "away_elo_pre",
+      "elo_diff",
+      "week",
+      "season_type",
+      "neutral_site",
+      "conference_game",
+      "rest_days_home",
+      "rest_days_away",
+      "rest_diff",
+      "off_ppg_roll_home",
+      "def_ppg_roll_home",
+      "off_ypp_roll_home",
+      "def_ypp_roll_home",
+      "pace_roll_home",
+      "off_ppg_roll_away",
+      "def_ppg_roll_away",
+      "off_ypp_roll_away",
+      "def_ypp_roll_away",
+      "pace_roll_away",
+      "prev_season_win_pct_home",
+      "prev_season_win_pct_away",
+      "prior_games_home",
+      "prior_games_away",
+      "fcs_games_in_window_home",
+      "fcs_games_in_window_away"
+    ],
+    "features_excluded": [
+      "fcs_opponent",
+      "as_of"
+    ],
+    "null_policy": "Nulls are passed to LightGBM as nulls and routed by the learner. Early-season rolling features are null by design; imputing them would invent a season history and dropping the rows would delete every week 1."
+  },
+  "seeds": {
+    "seed": 20140830,
+    "deterministic": true,
+    "num_threads": 1
+  },
+  "search": {
+    "grid": {
+      "num_leaves": [
+        15,
+        31
+      ],
+      "learning_rate": [
+        0.03,
+        0.05,
+        0.1
+      ],
+      "min_data_in_leaf": [
+        50,
+        100
+      ],
+      "feature_fraction": [
+        0.7,
+        0.9
+      ]
+    },
+    "combinations": 24,
+    "objective": "mean binary log loss over the forward-chaining folds",
+    "early_stopping_rounds": 50,
+    "max_boost_rounds": 2000,
+    "chosen": {
+      "num_leaves": 15,
+      "learning_rate": 0.03,
+      "min_data_in_leaf": 100,
+      "feature_fraction": 0.9
+    },
+    "chosen_mean_log_loss": 0.5484776012041289,
+    "chosen_mean_brier": 0.18515690083193323,
+    "chosen_at_grid_edge": [
+      "learning_rate"
+    ],
+    "grid_edge_rule": "Only axes with three or more candidate values can report an edge; on a two-value axis every winner is at an edge and the flag would mean nothing.",
+    "sensitivity": {
+      "num_leaves": [
+        [
+          15,
+          0.5484776012041289
+        ],
+        [
+          31,
+          0.5501235640114827
+        ]
+      ],
+      "learning_rate": [
+        [
+          0.03,
+          0.5484776012041289
+        ],
+        [
+          0.05,
+          0.5490233709185106
+        ],
+        [
+          0.1,
+          0.5486622196729577
+        ]
+      ],
+      "min_data_in_leaf": [
+        [
+          50,
+          0.5486622196729577
+        ],
+        [
+          100,
+          0.5484776012041289
+        ]
+      ],
+      "feature_fraction": [
+        [
+          0.7,
+          0.5486855904357316
+        ],
+        [
+          0.9,
+          0.5484776012041289
+        ]
+      ]
+    },
+    "spread_across_grid": 0.005307639391496144,
+    "final_boost_rounds": 117,
+    "final_rounds_rule": "mean of the rounds the folds early-stopped at, rounded. The final model is not early-stopped against 2022: 2022 is the calibration season and the reported validation season, and using it to choose an iteration count would make it a fitting input as well.",
+    "folds": [
+      {
+        "fit": [
+          2014,
+          2015,
+          2016,
+          2017,
+          2018
+        ],
+        "score": 2019,
+        "log_loss": 0.5306139527948069,
+        "brier": 0.1782402591243158,
+        "best_iteration": 108,
+        "n_fit": 3833,
+        "n_score": 774
+      },
+      {
+        "fit": [
+          2014,
+          2015,
+          2016,
+          2017,
+          2018,
+          2019
+        ],
+        "score": 2020,
+        "log_loss": 0.5672479299305966,
+        "brier": 0.19169423015479642,
+        "best_iteration": 73,
+        "n_fit": 4607,
+        "n_score": 534
+      },
+      {
+        "fit": [
+          2014,
+          2015,
+          2016,
+          2017,
+          2018,
+          2019,
+          2020
+        ],
+        "score": 2021,
+        "log_loss": 0.5475709208869836,
+        "brier": 0.18553621321668742,
+        "best_iteration": 170,
+        "n_fit": 5141,
+        "n_score": 770
+      }
+    ],
+    "all_candidates": [
+      {
+        "num_leaves": 15,
+        "learning_rate": 0.03,
+        "min_data_in_leaf": 100,
+        "feature_fraction": 0.9,
+        "mean_log_loss": 0.5484776012041289,
+        "mean_brier": 0.18515690083193323,
+        "mean_best_iteration": 117.0
+      },
+      {
+        "num_leaves": 15,
+        "learning_rate": 0.1,
+        "min_data_in_leaf": 50,
+        "feature_fraction": 0.9,
+        "mean_log_loss": 0.5486622196729577,
+        "mean_brier": 0.18506686437816433,
+        "mean_best_iteration": 41.0
+      },
+      {
+        "num_leaves": 15,
+        "learning_rate": 0.1,
+        "min_data_in_leaf": 100,
+        "feature_fraction": 0.7,
+        "mean_log_loss": 0.5486855904357316,
+        "mean_brier": 0.18483363111654497,
+        "mean_best_iteration": 40.0
+      },
+      {
+        "num_leaves": 15,
+        "learning_rate": 0.03,
+        "min_data_in_leaf": 100,
+        "feature_fraction": 0.7,
+        "mean_log_loss": 0.5489588563450102,
+        "mean_brier": 0.1850985735385747,
+        "mean_best_iteration": 139.33333333333334
+      },
+      {
+        "num_leaves": 15,
+        "learning_rate": 0.05,
+        "min_data_in_leaf": 50,
+        "feature_fraction": 0.9,
+        "mean_log_loss": 0.5490233709185106,
+        "mean_brier": 0.18561838617143023,
+        "mean_best_iteration": 75.33333333333333
+      },
+      {
+        "num_leaves": 15,
+        "learning_rate": 0.05,
+        "min_data_in_leaf": 100,
+        "feature_fraction": 0.9,
+        "mean_log_loss": 0.5492453494975557,
+        "mean_brier": 0.18557431402226643,
+        "mean_best_iteration": 63.666666666666664
+      },
+      {
+        "num_leaves": 15,
+        "learning_rate": 0.03,
+        "min_data_in_leaf": 50,
+        "feature_fraction": 0.9,
+        "mean_log_loss": 0.5493256176211235,
+        "mean_brier": 0.18564562691171158,
+        "mean_best_iteration": 116.0
+      },
+      {
+        "num_leaves": 15,
+        "learning_rate": 0.1,
+        "min_data_in_leaf": 100,
+        "feature_fraction": 0.9,
+        "mean_log_loss": 0.5493429854005569,
+        "mean_brier": 0.18535307422683936,
+        "mean_best_iteration": 41.0
+      },
+      {
+        "num_leaves": 15,
+        "learning_rate": 0.1,
+        "min_data_in_leaf": 50,
+        "feature_fraction": 0.7,
+        "mean_log_loss": 0.5495607382194994,
+        "mean_brier": 0.1860304133659948,
+        "mean_best_iteration": 37.666666666666664
+      },
+      {
+        "num_leaves": 15,
+        "learning_rate": 0.03,
+        "min_data_in_leaf": 50,
+        "feature_fraction": 0.7,
+        "mean_log_loss": 0.5497144704715967,
+        "mean_brier": 0.18571897943778762,
+        "mean_best_iteration": 139.0
+      },
+      {
+        "num_leaves": 31,
+        "learning_rate": 0.03,
+        "min_data_in_leaf": 100,
+        "feature_fraction": 0.7,
+        "mean_log_loss": 0.5501235640114827,
+        "mean_brier": 0.1855417434787148,
+        "mean_best_iteration": 98.33333333333333
+      },
+      {
+        "num_leaves": 15,
+        "learning_rate": 0.05,
+        "min_data_in_leaf": 50,
+        "feature_fraction": 0.7,
+        "mean_log_loss": 0.5502805690895319,
+        "mean_brier": 0.18589817767278485,
+        "mean_best_iteration": 77.0
+      },
+      {
+        "num_leaves": 15,
+        "learning_rate": 0.05,
+        "min_data_in_leaf": 100,
+        "feature_fraction": 0.7,
+        "mean_log_loss": 0.5512592129567674,
+        "mean_brier": 0.1861937977458953,
+        "mean_best_iteration": 73.66666666666667
+      },
+      {
+        "num_leaves": 31,
+        "learning_rate": 0.1,
+        "min_data_in_leaf": 100,
+        "feature_fraction": 0.7,
+        "mean_log_loss": 0.5516236153232895,
+        "mean_brier": 0.18632071370729722,
+        "mean_best_iteration": 29.666666666666668
+      },
+      {
+        "num_leaves": 31,
+        "learning_rate": 0.05,
+        "min_data_in_leaf": 100,
+        "feature_fraction": 0.7,
+        "mean_log_loss": 0.5516426145316674,
+        "mean_brier": 0.1862733880390802,
+        "mean_best_iteration": 65.33333333333333
+      },
+      {
+        "num_leaves": 31,
+        "learning_rate": 0.03,
+        "min_data_in_leaf": 100,
+        "feature_fraction": 0.9,
+        "mean_log_loss": 0.5519577267461956,
+        "mean_brier": 0.1864090830308075,
+        "mean_best_iteration": 81.33333333333333
+      },
+      {
+        "num_leaves": 31,
+        "learning_rate": 0.05,
+        "min_data_in_leaf": 50,
+        "feature_fraction": 0.7,
+        "mean_log_loss": 0.5523172648249308,
+        "mean_brier": 0.18667434657724039,
+        "mean_best_iteration": 53.333333333333336
+      },
+      {
+        "num_leaves": 31,
+        "learning_rate": 0.05,
+        "min_data_in_leaf": 100,
+        "feature_fraction": 0.9,
+        "mean_log_loss": 0.5523385136721167,
+        "mean_brier": 0.1863502515037482,
+        "mean_best_iteration": 46.333333333333336
+      },
+      {
+        "num_leaves": 31,
+        "learning_rate": 0.03,
+        "min_data_in_leaf": 50,
+        "feature_fraction": 0.7,
+        "mean_log_loss": 0.5526233328297203,
+        "mean_brier": 0.18694003415161534,
+        "mean_best_iteration": 105.33333333333333
+      },
+      {
+        "num_leaves": 31,
+        "learning_rate": 0.1,
+        "min_data_in_leaf": 50,
+        "feature_fraction": 0.7,
+        "mean_log_loss": 0.5527042723988592,
+        "mean_brier": 0.18667157288567693,
+        "mean_best_iteration": 31.0
+      },
+      {
+        "num_leaves": 31,
+        "learning_rate": 0.1,
+        "min_data_in_leaf": 50,
+        "feature_fraction": 0.9,
+        "mean_log_loss": 0.5529996689285838,
+        "mean_brier": 0.18708316393154836,
+        "mean_best_iteration": 31.0
+      },
+      {
+        "num_leaves": 31,
+        "learning_rate": 0.05,
+        "min_data_in_leaf": 50,
+        "feature_fraction": 0.9,
+        "mean_log_loss": 0.5534247272551108,
+        "mean_brier": 0.18754259490740896,
+        "mean_best_iteration": 65.0
+      },
+      {
+        "num_leaves": 31,
+        "learning_rate": 0.03,
+        "min_data_in_leaf": 50,
+        "feature_fraction": 0.9,
+        "mean_log_loss": 0.5535650687734889,
+        "mean_brier": 0.18738519501307072,
+        "mean_best_iteration": 86.33333333333333
+      },
+      {
+        "num_leaves": 31,
+        "learning_rate": 0.1,
+        "min_data_in_leaf": 100,
+        "feature_fraction": 0.9,
+        "mean_log_loss": 0.5537852405956251,
+        "mean_brier": 0.18711099427020375,
+        "mean_best_iteration": 22.666666666666668
+      }
+    ]
+  },
+  "calibration": {
+    "method": "isotonic regression",
+    "fitted_on": [
+      2022
+    ],
+    "clip": [
+      0.02,
+      0.98
+    ],
+    "why_not_test": "Calibration is part of the model. Fitting it on test data would tune the final predictions on the very games used for the headline Brier score \u2014 real code producing a false claim.",
+    "known_tradeoff": "Isotonic on ~750 validation games can overfit at the tails, which is what the clip is for. Platt scaling is the robustness alternative Phase 6 may compare against."
+  },
+  "validation": {
+    "season": 2022,
+    "n": 776,
+    "raw_brier": 0.20244442288307551,
+    "raw_log_loss": 0.5925707343171935,
+    "calibrated_brier": 0.1951022999676465,
+    "calibrated_log_loss": 0.5688887953196125,
+    "naive_home_baseline_brier": 0.24402549022693734,
+    "naive_home_rate": 0.5753679580443242,
+    "plausible_band": [
+      0.19,
+      0.21
+    ],
+    "in_plausible_band": true
+  },
+  "benchmark": {
+    "source": "vegas_benchmark.p_home_devig (Phase 2), spread-derived",
+    "n_with_line": 776,
+    "n_without_line": 0,
+    "vegas_brier": 0.18622580678448014,
+    "vegas_log_loss": 0.5492602910631171,
+    "model_brier_on_lined_games": 0.1951022999676465,
+    "model_log_loss_on_lined_games": 0.5688887953196125,
+    "model_beats_vegas": false,
+    "gap_brier": 0.008876493183166356
+  },
+  "lightgbm_version": "4.7.0"
+}

@@ -3,10 +3,12 @@
 A college football game-outcome model, built in phases with an explicit anti-leakage
 framework.
 
-**Status: Phase 4 (features + leakage audit).** CFBD data lands in SQLite, the de-vigged
+**Status: Phase 5 (training + calibration).** CFBD data lands in SQLite, the de-vigged
 closing line is built as the benchmark, a custom Elo rating runs the schedule in kickoff
-order, and a parquet feature store is built behind a leakage audit that recomputes a sample
-of its rows from a database truncated at each game's kickoff. No model yet.
+order, a parquet feature store is built behind a leakage audit that recomputes a sample of
+its rows from a database truncated at each game's kickoff, and a LightGBM classifier is
+fitted on 2014-2021 and calibrated on 2022. The 2023-2025 test seasons have not been
+scored: that is Phase 6.
 
 The project's claim is **calibration approaching the de-vigged Vegas closing line** —
 not beating it. Results, baselines, and limitations are written up in Phase 7; this
@@ -30,6 +32,10 @@ source .venv/bin/activate
 pip install -e ".[dev]"
 pytest
 ```
+
+On macOS, LightGBM's wheel links against the OpenMP runtime, which Apple does not ship:
+`import lightgbm` fails with `Library not loaded: @rpath/libomp.dylib` until you run
+`brew install libomp`.
 
 Copy `.env.example` to `.env` and add a
 [CollegeFootballData.com](https://collegefootballdata.com/) API key before Phase 1.
@@ -104,6 +110,43 @@ dropped, a post-game Elo rating, a back-filled null, and a builder that queries 
 table — and demands the audit fails **and names the poisoned column** each time.
 
 If the audit fails, the fix is in the features. Never in the audit.
+
+## Training and calibration
+
+```bash
+make train          # rebuilds the store, re-runs the audit, then fits and calibrates
+```
+
+Splits are season-forward and immutable: **train 2014-2021, validation 2022, test
+2023-2025**. Hyperparameters are chosen by forward-chaining cross-validation — fit
+2014-2018 score 2019, fit 2014-2019 score 2020, fit 2014-2020 score 2021 — over a
+24-point LightGBM grid. An isotonic calibrator is then fitted on 2022 alone and its output
+clipped to [0.02, 0.98]. FBS-vs-FCS games are excluded from the model frame, leaving 9,085
+of 10,373 rows.
+
+The test seasons are kept out by mechanism rather than by care: `assert_no_test_rows` runs
+inside `fit_booster` and `assert_validation_only` inside `fit_calibrator`, so the check is
+on the only path to a fitted object. `tests/test_train.py` poisons the training frame with
+a 2024 row and the calibrator with a 2021 row and demands both raise; with the guards
+stubbed out, those four tests go red.
+
+Validation, 2022, 776 FBS-vs-FBS games:
+
+| | Brier | Log loss |
+|---|---|---|
+| naive home baseline (57.5%) | 0.2440 | — |
+| model, raw | 0.2024 | 0.5926 |
+| model, calibrated | 0.1951 | 0.5689 |
+| de-vigged closing line | 0.1862 | 0.5493 |
+
+The model lands between the naive baseline and the line, closer to the line, and **short of
+it by 0.0089 Brier** — which is the intended result. A model that beat the line here would
+be evidence of leakage, and `make train` fails with a non-zero exit code if it does.
+Everything searched, chosen and scored is in [`models/train_report.json`](models/train_report.json);
+two runs of `make train` produce that file byte-for-byte identically, and the same booster.
+
+Both calibration figures are in-sample — the calibrator was fitted on the season it is
+scored on. They are not evidence that it generalises, and Phase 6 is where that is tested.
 
 See `CLAUDE.md` for project conventions, `DECISIONS.md` for the choice log, and
 `RISKS.md` for known gaps.

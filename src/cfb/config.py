@@ -43,6 +43,14 @@ FEATURE_STORE_PATH: Path = FEATURE_STORE_DIR / "features.parquet"
 """The Phase 4 feature store. One file, not partitioned by season: ~9k rows does not need
 partitioning, and one file is one thing to check the hash of."""
 
+MODELS_DIR: Path = PROJECT_ROOT / "models"
+GBT_PATH: Path = MODELS_DIR / "gbt.txt"
+CALIBRATOR_PATH: Path = MODELS_DIR / "calibrator.pkl"
+TRAIN_REPORT_PATH: Path = MODELS_DIR / "train_report.json"
+"""Phase 5 artefacts. The two fitted objects are gitignored build outputs; the report is
+committed, because it is the record of what was searched, what was chosen, and what it
+scored — the thing a human reviews rather than a thing a run regenerates."""
+
 ELO_PARAMS_PATH: Path = PROJECT_ROOT / "elo_params.json"
 """Elo parameters frozen by the Phase 3 grid search.
 
@@ -78,5 +86,5 @@ def get_api_key() -> str:
 
 def ensure_dirs() -> None:
     """Create the gitignored working directories if they do not already exist."""
-    for directory in (DATA_DIR, CACHE_DIR, FEATURE_STORE_DIR):
+    for directory in (DATA_DIR, CACHE_DIR, FEATURE_STORE_DIR, MODELS_DIR):
         directory.mkdir(parents=True, exist_ok=True)

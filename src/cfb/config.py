@@ -40,6 +40,13 @@ GOLD_DIR: Path = PROJECT_ROOT / "gold"
 DB_PATH: Path = DATA_DIR / "cfb.sqlite"
 FEATURE_STORE_DIR: Path = DATA_DIR / "features"
 
+ELO_PARAMS_PATH: Path = PROJECT_ROOT / "elo_params.json"
+"""Elo parameters frozen by the Phase 3 grid search.
+
+Committed, not gitignored: it is fitted on training seasons only and every later phase
+must use the same values, so it is part of the repository rather than a build artefact.
+"""
+
 # --- External API ------------------------------------------------------------
 
 CFBD_BASE_URL: str = "https://api.collegefootballdata.com"

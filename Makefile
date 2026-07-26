@@ -1,4 +1,4 @@
-.PHONY: ingest ingest-check benchmark features train evaluate reproduce test lint
+.PHONY: ingest ingest-check benchmark elo elo-tune features train evaluate reproduce test lint
 
 # Stubs fail loudly so a green `make reproduce` can never be mistaken for a real run.
 
@@ -12,6 +12,15 @@ ingest-check:
 # The yardstick. Derived from `lines`; safe to rebuild at any time.
 benchmark:
 	python -m cfb.vegas.benchmark
+
+# Pre-game ratings. Derived from the game spine; safe to rebuild at any time.
+elo:
+	python -m cfb.elo.pipeline
+
+# Refits K, HFA and the regression coefficient on training seasons only, then freezes them
+# to elo_params.json. Run `make elo` afterwards so the table matches the file.
+elo-tune:
+	python -m cfb.elo.tune
 
 features:
 	@echo "features: not implemented until phase 4" && exit 1

@@ -1,0 +1,56 @@
+{
+  "params": {
+    "k": 37.5,
+    "hfa": 50.0,
+    "regression": 0.2,
+    "mean": 1500.0,
+    "initial": 1500.0,
+    "newcomer": 1300.0,
+    "fcs": 1200.0
+  },
+  "fitted_on": "2014-2021",
+  "objective": "log loss, FBS vs FBS completed games",
+  "objective_value": 0.5519942817990312,
+  "brier": 0.187625669356285,
+  "games_scored": 5911,
+  "grid": {
+    "k": [
+      20.0,
+      22.5,
+      25.0,
+      27.5,
+      30.0,
+      32.5,
+      35.0,
+      37.5,
+      40.0,
+      42.5,
+      45.0,
+      47.5,
+      50.0
+    ],
+    "hfa": [
+      40.0,
+      45.0,
+      50.0,
+      55.0,
+      60.0,
+      65.0,
+      70.0,
+      75.0,
+      80.0,
+      85.0,
+      90.0
+    ],
+    "regression": [
+      0.0,
+      0.1,
+      0.15,
+      0.2,
+      0.25,
+      0.3333333333333333,
+      0.5
+    ]
+  },
+  "note": "Fitted on training seasons only and frozen. Later phases read these values; they do not re-fit. k, hfa and regression are tuned; mean, initial, newcomer and fcs are priors chosen before any fitting."
+}

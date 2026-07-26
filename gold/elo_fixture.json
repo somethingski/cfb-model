@@ -1,0 +1,166 @@
+{
+  "human_verified": true,
+  "verified_by": "Sean Gawronski",
+  "verified_on": "2026-07-26",
+  "description": "A four-team synthetic league whose pre-game ratings a human works out by hand. Six games chosen to exercise every rule in the system exactly once: a plain home game, an FBS team losing to a fixed-1200 FCS opponent, a close game, a neutral-site upset with no home-field advantage, a season boundary with pre-season regression, and a second-season game between two regressed teams.",
+  "instructions": "Work out, by hand, the rating each team carries OUT of each game - the post-game ratings - plus the end-of-2014 ratings before regression and the final ratings. Use a calculator and the method below, not this project's code: a fixture whose answers came from the code it checks proves nothing. Then set human_verified/verified_by/verified_on. tests/test_gold_elo.py compares your numbers against the engine to 6 decimal places, and separately chains them forward - applying the season regression itself - to check every pre-game rating the pipeline stores.",
+  "method": {
+    "expected": "E_home = 1 / (1 + 10 ^ (-(R_home - R_away + HFA) / 400)), HFA = 0 at a neutral site",
+    "mov_multiplier": "ln(|margin| + 1) * 2.2 / (0.001 * winner_elo_diff + 2.2), where winner_elo_diff is the WINNER's pre-game rating minus the loser's with HFA included, and is negative when the underdog won",
+    "update": "delta = K * mov_multiplier * (S_home - E_home); home_post = R_home + delta, away_post = R_away - delta; S_home is 1 for a home win, 0 for a home loss, 0.5 for a tie",
+    "fcs": "An FCS team is rated a fixed 1200 in every game and never updates. Its FBS opponent updates normally, so delta is applied to the FBS side only.",
+    "season_regression": "At the start of each new season, every tracked FBS rating becomes R + (1500 - R) * regression",
+    "initialisation": "Every team that is FBS in the first season starts at 1500. Nobody in this league enters FBS later."
+  },
+  "params": {
+    "k": 35.0,
+    "hfa": 65.0,
+    "regression": 0.3333333333333333,
+    "mean": 1500.0,
+    "initial": 1500.0,
+    "newcomer": 1300.0,
+    "fcs": 1200.0
+  },
+  "teams": [
+    {
+      "team_id": 1,
+      "name": "Alpha",
+      "classification": {
+        "2014": "fbs",
+        "2015": "fbs"
+      }
+    },
+    {
+      "team_id": 2,
+      "name": "Bravo",
+      "classification": {
+        "2014": "fbs",
+        "2015": "fbs"
+      }
+    },
+    {
+      "team_id": 3,
+      "name": "Charlie",
+      "classification": {
+        "2014": "fbs",
+        "2015": "fbs"
+      }
+    },
+    {
+      "team_id": 4,
+      "name": "Delta",
+      "classification": {
+        "2014": "fcs",
+        "2015": "fcs"
+      }
+    }
+  ],
+  "games": [
+    {
+      "game_id": 1,
+      "case": "opening game, both teams at the initial rating",
+      "season": 2014,
+      "start_date": "2014-09-06T18:00:00+00:00",
+      "neutral_site": 0,
+      "home": "Alpha",
+      "away": "Bravo",
+      "home_points": 28,
+      "away_points": 14,
+      "hand_computed": {
+        "home_elo_post": 1537.51827231,
+        "away_elo_post": 1462.48172769
+      }
+    },
+    {
+      "game_id": 2,
+      "case": "FBS team hosts a fixed-1200 FCS opponent and loses",
+      "season": 2014,
+      "start_date": "2014-09-13T18:00:00+00:00",
+      "neutral_site": 0,
+      "home": "Charlie",
+      "away": "Delta",
+      "home_points": 10,
+      "away_points": 17,
+      "hand_computed": {
+        "home_elo_post": 1422.25286491,
+        "away_elo_post": 1200.0
+      }
+    },
+    {
+      "game_id": 3,
+      "case": "one-point game between two teams that have already played",
+      "season": 2014,
+      "start_date": "2014-09-20T18:00:00+00:00",
+      "neutral_site": 0,
+      "home": "Bravo",
+      "away": "Charlie",
+      "home_points": 21,
+      "away_points": 20,
+      "hand_computed": {
+        "home_elo_post": 1470.6553392,
+        "away_elo_post": 1414.0792534
+      }
+    },
+    {
+      "game_id": 4,
+      "case": "neutral site, so no home-field advantage, and the road team wins big",
+      "season": 2014,
+      "start_date": "2014-11-01T18:00:00+00:00",
+      "neutral_site": 1,
+      "home": "Alpha",
+      "away": "Charlie",
+      "home_points": 3,
+      "away_points": 24,
+      "hand_computed": {
+        "home_elo_post": 1460.66406619,
+        "away_elo_post": 1490.93345952
+      }
+    },
+    {
+      "game_id": 5,
+      "case": "first game of the second season, so both ratings have been regressed",
+      "season": 2015,
+      "start_date": "2015-09-05T18:00:00+00:00",
+      "neutral_site": 0,
+      "home": "Bravo",
+      "away": "Alpha",
+      "home_points": 35,
+      "away_points": 7,
+      "hand_computed": {
+        "home_elo_post": 1525.89898211,
+        "away_elo_post": 1428.31395482
+      }
+    },
+    {
+      "game_id": 6,
+      "case": "second season, one team already updated this year and one not",
+      "season": 2015,
+      "start_date": "2015-09-12T18:00:00+00:00",
+      "neutral_site": 0,
+      "home": "Charlie",
+      "away": "Bravo",
+      "home_points": 14,
+      "away_points": 13,
+      "hand_computed": {
+        "home_elo_post": 1504.77254071,
+        "away_elo_post": 1515.08208108
+      }
+    }
+  ],
+  "season_end_2014": {
+    "note": "Ratings after the last 2014 game and BEFORE the pre-season regression. Delta is absent because an FCS team is never tracked. The test applies the regression to these to derive what game 5 must have started from.",
+    "hand_computed": {
+      "Alpha": 1460.66406619,
+      "Bravo": 1470.6553392,
+      "Charlie": 1490.93345952
+    }
+  },
+  "final_ratings": {
+    "note": "Ratings after game 6, which is the only way the last game's update gets checked.",
+    "hand_computed": {
+      "Alpha": 1428.31395482,
+      "Bravo": 1515.08208108,
+      "Charlie": 1504.77254071
+    }
+  }
+}

@@ -35,6 +35,21 @@ def add_team(conn: sqlite3.Connection, team_id: int, school: str) -> None:
     conn.execute("INSERT OR IGNORE INTO teams (team_id, school) VALUES (?, ?)", (team_id, school))
 
 
+def add_team_season(
+    conn: sqlite3.Connection, team_id: int, season: int, classification: str = "fbs"
+) -> None:
+    """Record a team's subdivision for one season.
+
+    The Elo walk reads subdivision per season, so a toy database needs these rows for a
+    team to be rated at all.
+    """
+    add_team(conn, team_id, f"Team {team_id}")
+    conn.execute(
+        "INSERT OR REPLACE INTO team_seasons (team_id, season, classification) VALUES (?, ?, ?)",
+        (team_id, season, classification),
+    )
+
+
 def add_game(conn: sqlite3.Connection, **overrides) -> int:
     """Insert a game with sane defaults, overridable per test.
 

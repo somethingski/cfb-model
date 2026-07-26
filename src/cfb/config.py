@@ -39,6 +39,9 @@ GOLD_DIR: Path = PROJECT_ROOT / "gold"
 
 DB_PATH: Path = DATA_DIR / "cfb.sqlite"
 FEATURE_STORE_DIR: Path = DATA_DIR / "features"
+FEATURE_STORE_PATH: Path = FEATURE_STORE_DIR / "features.parquet"
+"""The Phase 4 feature store. One file, not partitioned by season: ~9k rows does not need
+partitioning, and one file is one thing to check the hash of."""
 
 ELO_PARAMS_PATH: Path = PROJECT_ROOT / "elo_params.json"
 """Elo parameters frozen by the Phase 3 grid search.

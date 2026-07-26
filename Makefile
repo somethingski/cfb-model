@@ -1,4 +1,4 @@
-.PHONY: ingest ingest-check benchmark elo elo-tune features train evaluate reproduce test lint
+.PHONY: ingest ingest-check benchmark elo elo-tune features audit train evaluate reproduce test lint
 
 # Stubs fail loudly so a green `make reproduce` can never be mistaken for a real run.
 
@@ -22,16 +22,25 @@ elo:
 elo-tune:
 	python -m cfb.elo.tune
 
+# The parquet feature store, plus the generated FEATURES.md that documents it.
 features:
-	@echo "features: not implemented until phase 4" && exit 1
+	python -m cfb.features.build
+	python -m cfb.features.docs
 
-train:
+# The Phase 4 gate. Rebuilds the store first, so it always runs against a fresh build.
+# If this fails, the fix is in the features, never in the audit (CLAUDE.md).
+audit: features
+	python -m cfb.features.audit
+
+# Depending on audit is what makes the gate mechanical rather than honour-system:
+# there is no path to a trained model that does not run the leakage audit first.
+train: audit
 	@echo "train: not implemented until phase 5" && exit 1
 
 evaluate:
 	@echo "evaluate: not implemented until phase 6" && exit 1
 
-reproduce: ingest features train evaluate
+reproduce: ingest benchmark elo audit train evaluate
 	@echo "reproduce: not implemented until phase 7" && exit 1
 
 test:

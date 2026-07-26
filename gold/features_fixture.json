@@ -1,0 +1,499 @@
+{
+  "human_verified": true,
+  "verified_by": "Sean Gawronski",
+  "verified_on": "2026-07-26",
+  "method": "Rolling stats average the team's PREVIOUS games this season only \u2014 the game on the row is never in its own window. ppg and pace are plain means over those games. ypp is a ratio of sums: total yards divided by total plays across the window, not the mean of the per-game ratios. plays = rushingAttempts + pass attempts, where pass attempts is the second number in the 'completions-attempts' string (NCAA charges sack yardage to rushing, so sacks are already inside rushingAttempts). def_* use the opponent's numbers from those same games. rest_days is UTC calendar days since the team's previous completed game, capped at 30.",
+  "instructions": "Work every hand_computed value out yourself from the worksheets below \u2014 with a calculator, not by running this project's code. Then fill them in and set human_verified/verified_by/verified_on. The test compares hand_computed against pipeline to 1e-6, and fails while any value is still null.",
+  "games": [
+    {
+      "case": "three prior games each, no FCS in either window",
+      "game_id": 401012875,
+      "season": 2018,
+      "week": 4,
+      "kickoff": "2018-09-22T16:00:00+00:00",
+      "home": "Maryland",
+      "away": "Minnesota",
+      "home_worksheet": {
+        "team": "Maryland",
+        "team_id": 120,
+        "previous_game_kickoff": "2018-09-15T16:00:00+00:00",
+        "prior_games_this_season": [
+          {
+            "kickoff": "2018-09-01T16:00:00+00:00",
+            "opponent": "Texas",
+            "opponent_is_fcs": false,
+            "points_for": 34,
+            "points_against": 29,
+            "own_box_score": {
+              "total_yards": "407",
+              "rushing_attempts": "46",
+              "completion_attempts": "21-34"
+            },
+            "opponent_box_score": {
+              "total_yards": "405",
+              "rushing_attempts": "36",
+              "completion_attempts": "21-39"
+            }
+          },
+          {
+            "kickoff": "2018-09-08T22:00:00+00:00",
+            "opponent": "Bowling Green",
+            "opponent_is_fcs": false,
+            "points_for": 45,
+            "points_against": 14,
+            "own_box_score": {
+              "total_yards": "565",
+              "rushing_attempts": "53",
+              "completion_attempts": "8-16"
+            },
+            "opponent_box_score": {
+              "total_yards": "158",
+              "rushing_attempts": "28",
+              "completion_attempts": "17-27"
+            }
+          },
+          {
+            "kickoff": "2018-09-15T16:00:00+00:00",
+            "opponent": "Temple",
+            "opponent_is_fcs": false,
+            "points_for": 14,
+            "points_against": 35,
+            "own_box_score": {
+              "total_yards": "195",
+              "rushing_attempts": "31",
+              "completion_attempts": "8-21"
+            },
+            "opponent_box_score": {
+              "total_yards": "429",
+              "rushing_attempts": "52",
+              "completion_attempts": "16-28"
+            }
+          }
+        ],
+        "previous_season": {
+          "season": 2017,
+          "wins": 4,
+          "losses": 8,
+          "ties": 0
+        }
+      },
+      "away_worksheet": {
+        "team": "Minnesota",
+        "team_id": 135,
+        "previous_game_kickoff": "2018-09-15T19:30:00+00:00",
+        "prior_games_this_season": [
+          {
+            "kickoff": "2018-08-30T23:00:00+00:00",
+            "opponent": "New Mexico State",
+            "opponent_is_fcs": false,
+            "points_for": 48,
+            "points_against": 10,
+            "own_box_score": {
+              "total_yards": "522",
+              "rushing_attempts": "47",
+              "completion_attempts": "17-34"
+            },
+            "opponent_box_score": {
+              "total_yards": "271",
+              "rushing_attempts": "20",
+              "completion_attempts": "29-58"
+            }
+          },
+          {
+            "kickoff": "2018-09-08T23:30:00+00:00",
+            "opponent": "Fresno State",
+            "opponent_is_fcs": false,
+            "points_for": 21,
+            "points_against": 14,
+            "own_box_score": {
+              "total_yards": "307",
+              "rushing_attempts": "45",
+              "completion_attempts": "16-26"
+            },
+            "opponent_box_score": {
+              "total_yards": "299",
+              "rushing_attempts": "24",
+              "completion_attempts": "24-34"
+            }
+          },
+          {
+            "kickoff": "2018-09-15T19:30:00+00:00",
+            "opponent": "Miami (OH)",
+            "opponent_is_fcs": false,
+            "points_for": 26,
+            "points_against": 3,
+            "own_box_score": {
+              "total_yards": "295",
+              "rushing_attempts": "44",
+              "completion_attempts": "14-26"
+            },
+            "opponent_box_score": {
+              "total_yards": "199",
+              "rushing_attempts": "31",
+              "completion_attempts": "11-23"
+            }
+          }
+        ],
+        "previous_season": {
+          "season": 2017,
+          "wins": 5,
+          "losses": 7,
+          "ties": 0
+        }
+      },
+      "pipeline": {
+        "rest_days_home": 7.0,
+        "rest_days_away": 7.0,
+        "off_ppg_roll_home": 31.0,
+        "def_ppg_roll_home": 26.0,
+        "off_ypp_roll_home": 5.8059701492537314,
+        "def_ypp_roll_home": 4.723809523809524,
+        "pace_roll_home": 67.0,
+        "off_ppg_roll_away": 31.666666666666668,
+        "def_ppg_roll_away": 9.0,
+        "off_ypp_roll_away": 5.063063063063063,
+        "def_ypp_roll_away": 4.0473684210526315,
+        "pace_roll_away": 74.0,
+        "prev_season_win_pct_home": 0.3333333333333333,
+        "prev_season_win_pct_away": 0.4166666666666667
+      },
+      "hand_computed": {
+        "rest_days_home": 7.0,
+        "rest_days_away": 7.0,
+        "off_ppg_roll_home": 31.0,
+        "def_ppg_roll_home": 26.0,
+        "off_ypp_roll_home": 5.80597014925,
+        "def_ypp_roll_home": 4.72380952381,
+        "pace_roll_home": 67.0,
+        "off_ppg_roll_away": 31.6666666667,
+        "def_ppg_roll_away": 9.0,
+        "off_ypp_roll_away": 5.06306306306,
+        "def_ypp_roll_away": 4.04736842105,
+        "pace_roll_away": 74.0,
+        "prev_season_win_pct_home": 0.333333333333,
+        "prev_season_win_pct_away": 0.416666666667
+      }
+    },
+    {
+      "case": "an FCS opponent inside the home team's window",
+      "game_id": 401411116,
+      "season": 2022,
+      "week": 4,
+      "kickoff": "2022-09-22T23:30:00+00:00",
+      "home": "Virginia Tech",
+      "away": "West Virginia",
+      "home_worksheet": {
+        "team": "Virginia Tech",
+        "team_id": 259,
+        "previous_game_kickoff": "2022-09-17T15:00:00+00:00",
+        "prior_games_this_season": [
+          {
+            "kickoff": "2022-09-02T23:00:00+00:00",
+            "opponent": "Old Dominion",
+            "opponent_is_fcs": false,
+            "points_for": 17,
+            "points_against": 20,
+            "own_box_score": {
+              "total_yards": "340",
+              "rushing_attempts": "39",
+              "completion_attempts": "21-36"
+            },
+            "opponent_box_score": {
+              "total_yards": "245",
+              "rushing_attempts": "33",
+              "completion_attempts": "14-35"
+            }
+          },
+          {
+            "kickoff": "2022-09-11T00:00:00+00:00",
+            "opponent": "Boston College",
+            "opponent_is_fcs": false,
+            "points_for": 27,
+            "points_against": 10,
+            "own_box_score": {
+              "total_yards": "284",
+              "rushing_attempts": "45",
+              "completion_attempts": "16-25"
+            },
+            "opponent_box_score": {
+              "total_yards": "155",
+              "rushing_attempts": "26",
+              "completion_attempts": "19-34"
+            }
+          },
+          {
+            "kickoff": "2022-09-17T15:00:00+00:00",
+            "opponent": "Wofford",
+            "opponent_is_fcs": true,
+            "points_for": 27,
+            "points_against": 7,
+            "own_box_score": {
+              "total_yards": "475",
+              "rushing_attempts": "41",
+              "completion_attempts": "28-38"
+            },
+            "opponent_box_score": {
+              "total_yards": "199",
+              "rushing_attempts": "24",
+              "completion_attempts": "14-20"
+            }
+          }
+        ],
+        "previous_season": {
+          "season": 2021,
+          "wins": 6,
+          "losses": 7,
+          "ties": 0
+        }
+      },
+      "away_worksheet": {
+        "team": "West Virginia",
+        "team_id": 277,
+        "previous_game_kickoff": "2022-09-17T17:00:00+00:00",
+        "prior_games_this_season": [
+          {
+            "kickoff": "2022-09-01T23:00:00+00:00",
+            "opponent": "Pittsburgh",
+            "opponent_is_fcs": false,
+            "points_for": 31,
+            "points_against": 38,
+            "own_box_score": {
+              "total_yards": "404",
+              "rushing_attempts": "34",
+              "completion_attempts": "23-40"
+            },
+            "opponent_box_score": {
+              "total_yards": "384",
+              "rushing_attempts": "39",
+              "completion_attempts": "16-24"
+            }
+          },
+          {
+            "kickoff": "2022-09-10T22:00:00+00:00",
+            "opponent": "Kansas",
+            "opponent_is_fcs": false,
+            "points_for": 42,
+            "points_against": 55,
+            "own_box_score": {
+              "total_yards": "501",
+              "rushing_attempts": "38",
+              "completion_attempts": "28-40"
+            },
+            "opponent_box_score": {
+              "total_yards": "419",
+              "rushing_attempts": "36",
+              "completion_attempts": "18-29"
+            }
+          },
+          {
+            "kickoff": "2022-09-17T17:00:00+00:00",
+            "opponent": "Towson",
+            "opponent_is_fcs": true,
+            "points_for": 65,
+            "points_against": 7,
+            "own_box_score": {
+              "total_yards": "624",
+              "rushing_attempts": "45",
+              "completion_attempts": "27-40"
+            },
+            "opponent_box_score": {
+              "total_yards": "180",
+              "rushing_attempts": "32",
+              "completion_attempts": "10-23"
+            }
+          }
+        ],
+        "previous_season": {
+          "season": 2021,
+          "wins": 6,
+          "losses": 7,
+          "ties": 0
+        }
+      },
+      "pipeline": {
+        "rest_days_home": 5.0,
+        "rest_days_away": 5.0,
+        "off_ppg_roll_home": 23.666666666666668,
+        "def_ppg_roll_home": 12.333333333333334,
+        "off_ypp_roll_home": 4.90625,
+        "def_ypp_roll_home": 3.4825581395348837,
+        "pace_roll_home": 74.66666666666667,
+        "off_ppg_roll_away": 46.0,
+        "def_ppg_roll_away": 33.333333333333336,
+        "off_ypp_roll_away": 6.451476793248945,
+        "def_ypp_roll_away": 5.371584699453552,
+        "pace_roll_away": 79.0,
+        "prev_season_win_pct_home": 0.46153846153846156,
+        "prev_season_win_pct_away": 0.46153846153846156
+      },
+      "hand_computed": {
+        "rest_days_home": 5.0,
+        "rest_days_away": 5.0,
+        "off_ppg_roll_home": 23.6666666667,
+        "def_ppg_roll_home": 12.3333333333,
+        "off_ypp_roll_home": 4.90625,
+        "def_ypp_roll_home": 3.48255813953,
+        "pace_roll_home": 74.6666666667,
+        "off_ppg_roll_away": 46.0,
+        "def_ppg_roll_away": 33.333333333,
+        "off_ypp_roll_away": 6.45147679325,
+        "def_ypp_roll_away": 5.37158469945,
+        "pace_roll_away": 79.0,
+        "prev_season_win_pct_home": 0.461538461538,
+        "prev_season_win_pct_away": 0.461538461538
+      }
+    },
+    {
+      "case": "uneven windows and uneven rest",
+      "game_id": 400763422,
+      "season": 2015,
+      "week": 4,
+      "kickoff": "2015-09-26T19:00:00+00:00",
+      "home": "Baylor",
+      "away": "Rice",
+      "home_worksheet": {
+        "team": "Baylor",
+        "team_id": 239,
+        "previous_game_kickoff": "2015-09-12T23:30:00+00:00",
+        "prior_games_this_season": [
+          {
+            "kickoff": "2015-09-04T23:00:00+00:00",
+            "opponent": "SMU",
+            "opponent_is_fcs": false,
+            "points_for": 56,
+            "points_against": 21,
+            "own_box_score": {
+              "total_yards": "723",
+              "rushing_attempts": "37",
+              "completion_attempts": "17-32"
+            },
+            "opponent_box_score": {
+              "total_yards": "369",
+              "rushing_attempts": "54",
+              "completion_attempts": "16-24"
+            }
+          },
+          {
+            "kickoff": "2015-09-12T23:30:00+00:00",
+            "opponent": "Lamar",
+            "opponent_is_fcs": true,
+            "points_for": 66,
+            "points_against": 31,
+            "own_box_score": {
+              "total_yards": "785",
+              "rushing_attempts": "56",
+              "completion_attempts": "26-38"
+            },
+            "opponent_box_score": {
+              "total_yards": "340",
+              "rushing_attempts": "43",
+              "completion_attempts": "18-30"
+            }
+          }
+        ],
+        "previous_season": {
+          "season": 2014,
+          "wins": 11,
+          "losses": 2,
+          "ties": 0
+        }
+      },
+      "away_worksheet": {
+        "team": "Rice",
+        "team_id": 242,
+        "previous_game_kickoff": "2015-09-19T18:30:00+00:00",
+        "prior_games_this_season": [
+          {
+            "kickoff": "2015-09-05T20:40:00+00:00",
+            "opponent": "Wagner",
+            "opponent_is_fcs": true,
+            "points_for": 56,
+            "points_against": 16,
+            "own_box_score": {
+              "total_yards": "543",
+              "rushing_attempts": "54",
+              "completion_attempts": "12-21"
+            },
+            "opponent_box_score": {
+              "total_yards": "285",
+              "rushing_attempts": "37",
+              "completion_attempts": "10-22"
+            }
+          },
+          {
+            "kickoff": "2015-09-13T00:00:00+00:00",
+            "opponent": "Texas",
+            "opponent_is_fcs": false,
+            "points_for": 28,
+            "points_against": 42,
+            "own_box_score": {
+              "total_yards": "462",
+              "rushing_attempts": "58",
+              "completion_attempts": "23-38"
+            },
+            "opponent_box_score": {
+              "total_yards": "277",
+              "rushing_attempts": "28",
+              "completion_attempts": "5-10"
+            }
+          },
+          {
+            "kickoff": "2015-09-19T18:30:00+00:00",
+            "opponent": "North Texas",
+            "opponent_is_fcs": false,
+            "points_for": 38,
+            "points_against": 24,
+            "own_box_score": {
+              "total_yards": "562",
+              "rushing_attempts": "51",
+              "completion_attempts": "29-39"
+            },
+            "opponent_box_score": {
+              "total_yards": "478",
+              "rushing_attempts": "27",
+              "completion_attempts": "19-35"
+            }
+          }
+        ],
+        "previous_season": {
+          "season": 2014,
+          "wins": 8,
+          "losses": 5,
+          "ties": 0
+        }
+      },
+      "pipeline": {
+        "rest_days_home": 14.0,
+        "rest_days_away": 7.0,
+        "off_ppg_roll_home": 61.0,
+        "def_ppg_roll_home": 26.0,
+        "off_ypp_roll_home": 9.251533742331288,
+        "def_ypp_roll_home": 4.695364238410596,
+        "pace_roll_home": 81.5,
+        "off_ppg_roll_away": 40.666666666666664,
+        "def_ppg_roll_away": 27.333333333333332,
+        "off_ypp_roll_away": 6.003831417624521,
+        "def_ypp_roll_away": 6.540880503144654,
+        "pace_roll_away": 87.0,
+        "prev_season_win_pct_home": 0.8461538461538461,
+        "prev_season_win_pct_away": 0.6153846153846154
+      },
+      "hand_computed": {
+        "rest_days_home": 14.0,
+        "rest_days_away": 7.0,
+        "off_ppg_roll_home": 61.0,
+        "def_ppg_roll_home": 26.0,
+        "off_ypp_roll_home": 9.25153374233,
+        "def_ypp_roll_home": 4.69536423841,
+        "pace_roll_home": 81.5,
+        "off_ppg_roll_away": 40.6666666667,
+        "def_ppg_roll_away": 27.3333333333,
+        "off_ypp_roll_away": 6.00383141762,
+        "def_ypp_roll_away": 6.54088050314,
+        "pace_roll_away": 87.0,
+        "prev_season_win_pct_home": 0.846153846154,
+        "prev_season_win_pct_away": 0.615384615385
+      }
+    }
+  ]
+}

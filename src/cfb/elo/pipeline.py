@@ -320,13 +320,19 @@ def run_elo(
 # --- database -----------------------------------------------------------------
 
 
-def load_games(conn: sqlite3.Connection, through_season: int | None = None) -> list[Game]:
+def load_games(
+    conn: sqlite3.Connection, through_season: int | None = None, relation: str = "games"
+) -> list[Game]:
     """Read the game spine in kickoff order.
 
     Args:
         conn: Open connection to the built database.
         through_season: Stop after this season. Used by the tuning grid, which has no
             business reading past the training boundary, and by the chronology test.
+        relation: Table or view to read. Phase 4's leakage audit passes a view holding
+            only the games that had kicked off before the game under test, so that the
+            ratings it checks come from this walk and not from a reimplementation of it.
+            A module constant in every caller, never user input.
 
     Returns:
         Games ordered by ``(start_date, game_id)``.
@@ -341,9 +347,9 @@ def load_games(conn: sqlite3.Connection, through_season: int | None = None) -> l
         f"""
         SELECT game_id, season, start_date, neutral_site,
                home_team_id, away_team_id, home_points, away_points, completed
-        FROM games {where}
+        FROM {relation} {where}
         ORDER BY start_date, game_id
-        """,
+        """,  # noqa: S608 - relation is a module constant in every caller
         params,
     ).fetchall()
 
